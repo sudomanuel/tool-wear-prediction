@@ -1,0 +1,47 @@
+file_path,file_name,folder,belongs_to_current_pipeline,pipeline_stage,expected_columns_present,missing_columns,status,action_taken,notes
+outputs/metrics/data_inventory.csv,data_inventory.csv,metrics,True,linear_pipeline_or_audit,True,,active,,audit step (mantener)
+outputs/metrics/feature_columns.csv,feature_columns.csv,metrics,True,linear_pipeline_or_audit,True,,active,,lista de features (mantener)
+outputs/metrics/layered_pipeline/00_cleanup_report.csv,00_cleanup_report.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/00_leakage_checks.csv,00_leakage_checks.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/01_feature_columns.csv,01_feature_columns.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/01_modeling_dataset_summary.csv,01_modeling_dataset_summary.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/02_loeo_folds.csv,02_loeo_folds.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/03_N_ST_loeo_metrics.csv,03_N_ST_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/04_N_CT_random_loeo_metrics.csv,04_N_CT_random_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/05_N_CT_grid_loeo_metrics.csv,05_N_CT_grid_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/06_A_ST_feature_noise_loeo_metrics.csv,06_A_ST_feature_noise_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/06_A_ST_feature_scaling_loeo_metrics.csv,06_A_ST_feature_scaling_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/06_A_ST_grouped_scaling_loeo_metrics.csv,06_A_ST_grouped_scaling_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/07_A_CT_random_feature_noise_loeo_metrics.csv,07_A_CT_random_feature_noise_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/07_A_CT_random_feature_scaling_loeo_metrics.csv,07_A_CT_random_feature_scaling_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/07_A_CT_random_grouped_scaling_loeo_metrics.csv,07_A_CT_random_grouped_scaling_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/08_A_CT_grid_feature_noise_loeo_metrics.csv,08_A_CT_grid_feature_noise_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/08_A_CT_grid_feature_scaling_loeo_metrics.csv,08_A_CT_grid_feature_scaling_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/08_A_CT_grid_grouped_scaling_loeo_metrics.csv,08_A_CT_grid_grouped_scaling_loeo_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_all_metrics.csv,09_all_metrics.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_augmentation_effect_summary.csv,09_augmentation_effect_summary.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_branch_best_summary.csv,09_branch_best_summary.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_branch_execution_summary.csv,09_branch_execution_summary.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_delta_vs_baseline.csv,09_delta_vs_baseline.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_figure_purpose_map.csv,09_figure_purpose_map.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_final_layered_ranking.csv,09_final_layered_ranking.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_random_vs_grid_summary.csv,09_random_vs_grid_summary.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_tuning_effect_summary.csv,09_tuning_effect_summary.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/layered_pipeline/09_tuning_results_all.csv,09_tuning_results_all.csv,metrics/layered_pipeline,True,layered,True,,active,,
+outputs/metrics/leakage_checks.csv,leakage_checks.csv,metrics,True,linear_pipeline_or_audit,True,,active,,audit (sera regenerado dentro de layered)
+outputs/metrics/missing_segments.csv,missing_segments.csv,metrics,True,linear_pipeline_or_audit,True,,active,,audit step (mantener)
+outputs/metrics/output_manifest.csv,output_manifest.csv,metrics,True,11_manifest,True,,active,,indice global de outputs del flujo activo
+outputs/metrics/shap/10_shap_feature_ranking_elasticnet_a_st_feature_noise.csv,10_shap_feature_ranking_elasticnet_a_st_feature_noise.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/metrics/shap/10_shap_feature_ranking_elasticnet_n_st.csv,10_shap_feature_ranking_elasticnet_n_st.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/metrics/shap/10_shap_feature_ranking_xgboost_n_ct_random.csv,10_shap_feature_ranking_xgboost_n_ct_random.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/metrics/shap/10_shap_selected_models.csv,10_shap_selected_models.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/metrics/shap/10_shap_values_elasticnet_a_st_feature_noise.csv,10_shap_values_elasticnet_a_st_feature_noise.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/metrics/shap/10_shap_values_elasticnet_n_st.csv,10_shap_values_elasticnet_n_st.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/metrics/shap/10_shap_values_xgboost_n_ct_random.csv,10_shap_values_xgboost_n_ct_random.csv,metrics/shap,True,10_shap,True,,active,,shap layered con prefijo 10_
+outputs/predictions/layered_pipeline/09_predictions_all_branches.csv,09_predictions_all_branches.csv,predictions/layered_pipeline,True,layered,True,,active,,
+data/processed/experiment_features.csv,experiment_features.csv,processed,True,01_dataset,True,,active,,dataset procesado (entrada del pipeline)
+data/processed/modeling_dataset.csv,modeling_dataset.csv,processed,True,01_dataset,True,,active,,dataset procesado (entrada del pipeline)
+data/interim/augmentation/train_augmented_feature_noise.csv,train_augmented_feature_noise.csv,interim/augmentation,True,01_intermediate,True,,active,,intermediate (entrada del pipeline)
+data/interim/augmentation/train_augmented_feature_scaling.csv,train_augmented_feature_scaling.csv,interim/augmentation,True,01_intermediate,True,,active,,intermediate (entrada del pipeline)
+data/interim/augmentation/train_augmented_grouped_scaling.csv,train_augmented_grouped_scaling.csv,interim/augmentation,True,01_intermediate,True,,active,,intermediate (entrada del pipeline)
+data/interim/contact_features.csv,contact_features.csv,interim,True,01_intermediate,True,,active,,intermediate (entrada del pipeline)

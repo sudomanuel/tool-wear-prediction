@@ -1,0 +1,23 @@
+figure_path,question_answered,metric,interpretation_hint,should_show_supervisor
+outputs/figures/layered_pipeline/00_layered_flow_diagram_no_holdout.png,¿Que estructura tiene el experimento?,n/a,"D → N/A → ST/CT(random,grid) → LOEO → ranking → SHAP. Sin hold-out.",True
+outputs/figures/layered_pipeline/09_branch_performance_MAE.png,¿Cual rama tiene menor MAE?,MAE,Menor es mejor. Etiqueta = mejor modelo de la rama.,True
+outputs/figures/layered_pipeline/09_branch_performance_RMSE.png,¿Cual rama tiene menor RMSE?,RMSE,Menor es mejor. RMSE penaliza outliers mas que MAE.,False
+outputs/figures/layered_pipeline/09_branch_performance_R2.png,¿Cual rama explica mas varianza?,R²,Mayor es mejor. R² negativo = peor que la media.,False
+outputs/figures/layered_pipeline/09_branch_performance_MAPE.png,¿Cual rama tiene menor error porcentual?,MAPE,"Menor es mejor. VB_um > 0 siempre, asi que MAPE es seguro.",False
+outputs/figures/layered_pipeline/09_best_model_per_branch_MAE.png,¿Que modelo gana en cada rama?,MAE,Cada barra muestra rama → mejor modelo (con MAE).,True
+outputs/figures/layered_pipeline/09_heatmap_model_vs_branch_MAE.png,¿Que modelos son consistentemente buenos?,MAE,Verde oscuro = bajo MAE. Lee verticalmente por modelo.,True
+outputs/figures/layered_pipeline/09_heatmap_model_vs_branch_R2.png,¿Que modelos generalizan mejor?,R²,Amarillo = R² alto. Negro = R² negativo.,False
+outputs/figures/layered_pipeline/09_delta_MAE_vs_baseline_N_ST.png,¿Tuning o augmentation mejoran al baseline?,MAE,Δ<0 = mejora; |Δ|<1 = empate practico; Δ>0 = empeora.,True
+outputs/figures/layered_pipeline/09_delta_RMSE_vs_baseline_N_ST.png,¿Idem MAE para RMSE?,RMSE,Misma lectura que delta MAE.,False
+outputs/figures/layered_pipeline/09_tuning_effect_MAE.png,¿Ayuda el tuning?,MAE,"Tres barras: ST/Random/Grid. Si Random ≈ Grid, Grid no aporta.",True
+outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png,¿Ayuda el tuning (RMSE)?,RMSE,Idem MAE.,False
+outputs/figures/layered_pipeline/09_random_vs_grid_MAE.png,¿Aporta GridSearch sobre RandomizedSearch?,MAE,Panel derecho: |Δ|<1 = empate practico.,True
+outputs/figures/layered_pipeline/09_random_vs_grid_RMSE.png,Idem random vs grid (RMSE),RMSE,,False
+outputs/figures/layered_pipeline/09_augmentation_effect_MAE.png,¿Augmentation ayuda o no?,MAE,"Compara N vs cada estrategia A, agrupado por tuning.",True
+outputs/figures/layered_pipeline/09_augmentation_effect_RMSE.png,Idem augmentation (RMSE),RMSE,,False
+outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png,¿Cual es la historia completa? (MAE),MAE,Dashboard 2x2: best por rama + delta + tuning + aug.,True
+outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png,Historia RMSE,RMSE,,False
+outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png,Historia R²,R²,,False
+outputs/figures/layered_pipeline/09_actual_vs_predicted_best_global_LOEO.png,¿Que tan bien predice el mejor modelo?,visual,Cerca de la diagonal = buena prediccion.,True
+outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png,¿Hay sesgo en los residuales?,visual,Distribucion centrada en 0 = sin sesgo.,False
+outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png,¿Que experimentos son los mas dificiles?,visual,Barras = error por experimento del mejor LOEO.,True

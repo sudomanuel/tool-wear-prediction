@@ -1,0 +1,11 @@
+check_name,status,details
+one_row_per_experiment,PASS,"10 filas, todas unicas por experiment_id"
+target_unique_per_experiment,PASS,10 experimentos con VB_um unico
+no_experiment_in_both_splits,PASS,"train=[66, 68, 69, 70, 73, 74, 75, 77], test=[67, 76]"
+id_columns_excluded,PASS,features=203 sin ids ni target
+test_not_augmented,PASS,ningun archivo de train_augmented contiene experimentos de test
+augmented_rows_keep_vb,PASS,todas las filas augmentadas conservan VB_um del experimento real
+no_contact_level_labels,PASS,arquitectura no soporta filas por contacto (dataset_builder hace 1 fila/experimento)
+experiment_order_excluded_by_default,PASS,experiment_order esta en NON_FEATURE_COLS
+shap_real_data_only,PASS,run_shap_analysis filtra is_augmented=True antes de explicar
+tuning_only_train,PASS,RandomizedSearchCV/GridSearchCV usan GroupKFold sobre X_train

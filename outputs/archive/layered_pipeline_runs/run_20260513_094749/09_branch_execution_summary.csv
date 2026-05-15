@@ -1,0 +1,13 @@
+branch_id,data_branch,tuning_branch,tuning_method,augmentation_strategy,validation_type,models_run,status,notes,duration_sec
+N_ST,N,ST,none,none,loeo,all_baselines,OK,,5.7
+N_CT_random,N,CT,random,none,loeo,all_baselines,OK,,14.1
+N_CT_grid,N,CT,grid,none,loeo,all_baselines,OK,,9.8
+A_ST_feature_noise,A,ST,none,feature_noise,loeo,all_baselines,OK,,6.4
+A_CT_random_feature_noise,A,CT,random,feature_noise,loeo,all_baselines,OK,,9.4
+A_CT_grid_feature_noise,A,CT,grid,feature_noise,loeo,all_baselines,OK,,12.3
+A_ST_feature_scaling,A,ST,none,feature_scaling,loeo,all_baselines,OK,,10.0
+A_CT_random_feature_scaling,A,CT,random,feature_scaling,loeo,all_baselines,OK,,13.1
+A_CT_grid_feature_scaling,A,CT,grid,feature_scaling,loeo,all_baselines,OK,,16.3
+A_ST_grouped_scaling,A,ST,none,grouped_scaling,loeo,all_baselines,OK,,9.9
+A_CT_random_grouped_scaling,A,CT,random,grouped_scaling,loeo,all_baselines,OK,,13.3
+A_CT_grid_grouped_scaling,A,CT,grid,grouped_scaling,loeo,all_baselines,OK,,16.8

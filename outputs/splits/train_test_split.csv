@@ -1,0 +1,11 @@
+experiment_id,split,VB_um,tool_id,experiment_order
+66,train,85,T01,1
+68,train,119,T01,3
+69,train,136,T01,4
+70,train,150,T01,5
+73,train,168,T01,6
+74,train,190,T01,7
+75,train,215,T01,8
+77,train,280,T01,10
+67,test,103,T01,2
+76,test,245,T01,9

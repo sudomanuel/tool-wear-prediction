@@ -1,0 +1,5 @@
+item_checked,status,action_taken,notes
+target_column_is_VB_um,PASS,,target encontrado: VB_um
+no_forbidden_targets_in_columns,PASS,,ninguna columna prohibida
+prior_layered_outputs,PASS,,no habia outputs previos
+feature_columns_clean,PASS,,"features=203, leaks=[]"

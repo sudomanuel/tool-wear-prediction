@@ -1,0 +1,8 @@
+model,tuning_method,pipeline_variant,validation_type,MAE,RMSE,R2,MAPE_%,best_params
+Lasso (tuned),RandomizedSearchCV,tuned,holdout,14.25470984208625,16.29826090236561,0.947305433754894,12.052065911134905,"{""model__alpha"": 0.01}"
+ElasticNet (tuned),RandomizedSearchCV,tuned,holdout,33.882706555412895,33.91561723525499,0.771817279815845,22.94247946834088,"{""model__l1_ratio"": 0.3, ""model__alpha"": 0.01}"
+Ridge (tuned),RandomizedSearchCV,tuned,holdout,34.71608449671825,35.334335628483174,0.7523278567136886,22.085801739745687,"{""model__alpha"": 100}"
+RandomForest (tuned),RandomizedSearchCV,tuned,holdout,58.72500000000001,59.06463620475454,0.30794857171196166,38.712403407965134,"{""model__n_estimators"": 200, ""model__min_samples_leaf"": 1, ""model__max_depth"": null}"
+XGBoost_grid (tuned),GridSearchCV,tuned,holdout,61.76654052734375,63.28250694804593,0.20557911413817076,38.71534873217149,"{""model__colsample_bytree"": 0.8, ""model__learning_rate"": 0.05, ""model__max_depth"": 2, ""model__n_estimators"": 30, ""model__reg_lambda"": 5, ""model__subsample"": 0.8}"
+XGBoost_random (tuned),RandomizedSearchCV,tuned,holdout,61.76654052734375,63.28250694804593,0.20557911413817076,38.71534873217149,"{""model__subsample"": 0.8, ""model__reg_lambda"": 5, ""model__n_estimators"": 30, ""model__max_depth"": 2, ""model__learning_rate"": 0.05, ""model__colsample_bytree"": 0.8}"
+SVR (tuned),RandomizedSearchCV,tuned,holdout,70.78798058688356,70.88001583216229,0.00337697989137542,47.793684156671,"{""model__gamma"": ""auto"", ""model__epsilon"": 10, ""model__C"": 100}"

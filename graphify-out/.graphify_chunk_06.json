@@ -1,0 +1,1077 @@
+{
+  "nodes": [
+    {
+      "id": "09_residuals_best_global_LOEO",
+      "label": "LOEO Residuals — Best Global ElasticNet (scatter)",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_residuals_by_experiment_best_global_LOEO",
+      "label": "LOEO Residuals by Experiment — Best Global ElasticNet (bar)",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_residuals_by_experiment_multi_LOEO",
+      "label": "LOEO Residuals by Experiment — Multi-Config Overlay",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_sequential_comparison_dashboard_MAE",
+      "label": "Sequential Comparison Dashboard — MAE (LOEO-CV)",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_sequential_comparison_dashboard_R2",
+      "label": "Sequential Comparison Dashboard — R2 (LOEO-CV)",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_sequential_comparison_dashboard_RMSE",
+      "label": "Sequential Comparison Dashboard — RMSE (LOEO-CV)",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_tuning_effect_MAE",
+      "label": "Tuning Effect on Best MAE — by Data and Augmentation",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_MAE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "09_tuning_effect_RMSE",
+      "label": "Tuning Effect on Best RMSE — by Data and Augmentation",
+      "file_type": "image",
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "label": "SHAP Bar Chart — ElasticNet A_ST_feature_noise (Best Global)",
+      "file_type": "image",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "10_shap_bar_elasticnet_n_st",
+      "label": "SHAP Bar Chart — ElasticNet N_ST (Baseline)",
+      "file_type": "image",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "10_shap_bar_xgboost_n_ct_random",
+      "label": "SHAP Bar Chart — XGBoost N_CT_random",
+      "file_type": "image",
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "10_shap_summary_elasticnet_a_st_feature_noise",
+      "label": "SHAP Beeswarm Summary — ElasticNet A_ST_feature_noise (Best Global)",
+      "file_type": "image",
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "10_shap_summary_elasticnet_n_st",
+      "label": "SHAP Beeswarm Summary — ElasticNet N_ST (Baseline)",
+      "file_type": "image",
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_n_st.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "10_shap_summary_xgboost_n_ct_random",
+      "label": "SHAP Beeswarm Summary — XGBoost N_CT_random",
+      "file_type": "image",
+      "source_file": "outputs/figures/shap/10_shap_summary_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_loeo_cv",
+      "label": "Leave-One-Experiment-Out Cross-Validation (LOEO-CV)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_elasticnet_best_global",
+      "label": "Best Global Model: ElasticNet on A_ST_feature_noise (MAE=26.92, RMSE=37.90, R2=0.601)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_residual_pattern_global",
+      "label": "Residual Pattern: Heteroscedastic — Underestimation at High VB_um",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_exp66_exp69_overestimation",
+      "label": "Experiments 66 and 69: Large Positive Residuals (~+47, +49 µm) — Model Overestimates",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_exp76_exp77_underestimation",
+      "label": "Experiments 76 and 77: Large Negative Residuals (~-50, -82 µm) — Model Underestimates at High Wear",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_multi_config_residuals",
+      "label": "Multi-Config Residual Overlay: 4 Configs Compared Across 10 Experiments",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_10um_tolerance_band",
+      "label": "Tolerance Band ±10 µm for Acceptable Residual Error",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_sequential_4stages",
+      "label": "Sequential Pipeline: 4 Stages (N_ST baseline, N_CT tuning, A_ST augmentation, A_CT both)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_tuning_degrades_feature_noise",
+      "label": "Tuning Degrades A_feature_noise Branch: CT_random/grid MAE=36 vs ST=26.9",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_augmentation_marginal_mae",
+      "label": "Augmentation Effect on MAE is Marginal: all branches ~27 µm (ST, no-tuning)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_feature_scaling_ct_best_r2",
+      "label": "A_CT_feature_scaling Branches Achieve Best R2 (~0.67-0.70) — Tuning+Augmentation Synergy",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_feature_noise_ct_degrades_r2",
+      "label": "A_CT_feature_noise Branches Severely Degrade R2 to ~0.30 (delta ~-0.25 vs baseline)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_a_ct_random_feature_scaling_best_rmse",
+      "label": "A_CT_random/grid_feature_scaling Achieve Best RMSE (~34-35 µm, delta ~-3 to -4 vs N_ST)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_st_no_tuning_optimal_mae",
+      "label": "ST (No Tuning) Achieves Best MAE Across All Augmentation Types (~26.9-27.1 µm)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_MAE.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_elasticnet_top5_a_st_fn",
+      "label": "SHAP Top-5 Features ElasticNet A_ST_feature_noise: A_p1_skewness(2.19), A_rms_std_6_contacts(2.15), R_p1_crest_factor(1.95), R_rms_std_6_contacts(1.85), A_p1_crest_factor(1.57)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_elasticnet_top5_n_st",
+      "label": "SHAP Top-5 Features ElasticNet N_ST: A_p1_skewness(2.19), A_rms_std_6_contacts(2.16), R_p1_crest_factor(1.95), R_rms_std_6_contacts(1.85), A_p1_crest_factor(1.58)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_xgboost_top5_n_ct_random",
+      "label": "SHAP Top-5 Features XGBoost N_CT_random: A_p1_std(8.58), A_p1_skewness(7.25), A_p3_skewness(5.77), R_p1_rms(5.32), A_p1_mean(4.96)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_elasticnet_directions",
+      "label": "SHAP Directions ElasticNet: High skewness/crest-factor mixed direction; high RMS contacts → negative SHAP (underestimation push); high dominant_freq → positive or large positive outlier SHAP",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_xgboost_directions",
+      "label": "SHAP Directions XGBoost: Low A_p1_std → strong negative SHAP (lowers VB_um prediction); high A_p1_skewness → positive SHAP; R_p1_rms high → positive; bidirectional effects dominate",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_summary_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_elasticnet_consistent_features",
+      "label": "ElasticNet Feature Importance Stable Across N_ST and A_ST_feature_noise Configurations",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_shap_xgboost_uses_more_features",
+      "label": "XGBoost Uses Fewer Non-Zero Features (50 vs 123 for ElasticNet) but Assigns Larger SHAP Magnitudes",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_A_p1_skewness",
+      "label": "Feature: A_p1_skewness — Acoustic Signal Pass-1 Skewness (statistical moment)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_A_rms_std_6_contacts",
+      "label": "Feature: A_rms_std_6_contacts — Std Dev of RMS over 6 Contacts (Acoustic)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_R_p1_crest_factor",
+      "label": "Feature: R_p1_crest_factor — Raw Signal Pass-1 Crest Factor (peak/RMS ratio)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_R_rms_std_6_contacts",
+      "label": "Feature: R_rms_std_6_contacts — Std Dev of RMS over 6 Contacts (Raw Signal)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_A_p1_crest_factor",
+      "label": "Feature: A_p1_crest_factor — Acoustic Signal Pass-1 Crest Factor",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_A_p1_std",
+      "label": "Feature: A_p1_std — Acoustic Signal Pass-1 Standard Deviation (amplitude spread)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_R_p1_rms",
+      "label": "Feature: R_p1_rms — Raw Signal Pass-1 RMS (root mean square vibration energy)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_A_p3_skewness",
+      "label": "Feature: A_p3_skewness — Acoustic Signal Pass-3 Skewness",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "feature_R_p4_dominant_freq_hz",
+      "label": "Feature: R_p4_dominant_freq_hz — Raw Signal Pass-4 Dominant Frequency (Hz)",
+      "file_type": "rationale",
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "09_residuals_best_global_LOEO",
+      "target": "concept_elasticnet_best_global",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_best_global_LOEO",
+      "target": "concept_loeo_cv",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_best_global_LOEO",
+      "target": "concept_residual_pattern_global",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "09_residuals_by_experiment_best_global_LOEO",
+      "target": "concept_exp66_exp69_overestimation",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_by_experiment_best_global_LOEO",
+      "target": "concept_exp76_exp77_underestimation",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_by_experiment_best_global_LOEO",
+      "target": "concept_loeo_cv",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_by_experiment_multi_LOEO",
+      "target": "concept_multi_config_residuals",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_by_experiment_multi_LOEO",
+      "target": "concept_10um_tolerance_band",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_residuals_by_experiment_multi_LOEO",
+      "target": "concept_elasticnet_best_global",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_MAE",
+      "target": "concept_sequential_4stages",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_MAE",
+      "target": "concept_tuning_degrades_feature_noise",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_MAE",
+      "target": "concept_augmentation_marginal_mae",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_MAE",
+      "target": "concept_elasticnet_best_global",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_R2",
+      "target": "concept_feature_scaling_ct_best_r2",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_R2",
+      "target": "concept_feature_noise_ct_degrades_r2",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_RMSE",
+      "target": "concept_a_ct_random_feature_scaling_best_rmse",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_sequential_comparison_dashboard_RMSE",
+      "target": "concept_tuning_degrades_feature_noise",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "09_tuning_effect_MAE",
+      "target": "concept_st_no_tuning_optimal_mae",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_MAE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_tuning_effect_MAE",
+      "target": "concept_tuning_degrades_feature_noise",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_MAE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_tuning_effect_RMSE",
+      "target": "concept_st_no_tuning_optimal_mae",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "09_tuning_effect_RMSE",
+      "target": "concept_tuning_degrades_feature_noise",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "concept_elasticnet_best_global",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "concept_shap_elasticnet_top5_a_st_fn",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "feature_A_p1_skewness",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "feature_A_rms_std_6_contacts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "feature_R_p1_crest_factor",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "feature_R_rms_std_6_contacts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "target": "feature_A_p1_crest_factor",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_n_st",
+      "target": "concept_shap_elasticnet_top5_n_st",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_n_st",
+      "target": "concept_shap_elasticnet_consistent_features",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "10_shap_bar_elasticnet_n_st",
+      "target": "feature_A_p1_skewness",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_elasticnet_n_st",
+      "target": "feature_A_rms_std_6_contacts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_n_st.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_xgboost_n_ct_random",
+      "target": "concept_shap_xgboost_top5_n_ct_random",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_xgboost_n_ct_random",
+      "target": "concept_shap_xgboost_uses_more_features",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_xgboost_n_ct_random",
+      "target": "feature_A_p1_std",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_xgboost_n_ct_random",
+      "target": "feature_A_p1_skewness",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_bar_xgboost_n_ct_random",
+      "target": "feature_R_p1_rms",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_summary_elasticnet_a_st_feature_noise",
+      "target": "concept_shap_elasticnet_directions",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "10_shap_summary_elasticnet_a_st_feature_noise",
+      "target": "10_shap_bar_elasticnet_a_st_feature_noise",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_summary_elasticnet_n_st",
+      "target": "10_shap_bar_elasticnet_n_st",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_n_st.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "10_shap_summary_elasticnet_n_st",
+      "target": "concept_shap_elasticnet_consistent_features",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/shap/10_shap_summary_elasticnet_n_st.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "10_shap_summary_xgboost_n_ct_random",
+      "target": "concept_shap_xgboost_directions",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/shap/10_shap_summary_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "10_shap_summary_xgboost_n_ct_random",
+      "target": "10_shap_bar_xgboost_n_ct_random",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_summary_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_shap_elasticnet_top5_a_st_fn",
+      "target": "concept_shap_elasticnet_top5_n_st",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "concept_residual_pattern_global",
+      "target": "concept_exp76_exp77_underestimation",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.90,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png",
+      "source_location": null,
+      "weight": 0.90
+    },
+    {
+      "source": "concept_tuning_degrades_feature_noise",
+      "target": "concept_st_no_tuning_optimal_mae",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/layered_pipeline/09_tuning_effect_MAE.png",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "feature_A_p1_skewness",
+      "target": "concept_shap_elasticnet_top5_a_st_fn",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "feature_A_p1_skewness",
+      "target": "concept_shap_xgboost_top5_n_ct_random",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_elasticnet_best_global",
+      "target": "concept_sequential_4stages",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.90,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png",
+      "source_location": null,
+      "weight": 0.90
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "shap_elasticnet_interpretability_group",
+      "label": "SHAP Interpretability for ElasticNet Models (N_ST and A_ST_feature_noise)",
+      "nodes": [
+        "10_shap_bar_elasticnet_a_st_feature_noise",
+        "10_shap_bar_elasticnet_n_st",
+        "10_shap_summary_elasticnet_a_st_feature_noise",
+        "10_shap_summary_elasticnet_n_st",
+        "concept_shap_elasticnet_consistent_features",
+        "concept_shap_elasticnet_directions"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png"
+    },
+    {
+      "id": "shap_top_features_shared_acoustic",
+      "label": "Top Shared Features Across ElasticNet Models: Acoustic Skewness, RMS Std, Crest Factor",
+      "nodes": [
+        "feature_A_p1_skewness",
+        "feature_A_rms_std_6_contacts",
+        "feature_R_p1_crest_factor",
+        "feature_R_rms_std_6_contacts",
+        "feature_A_p1_crest_factor",
+        "concept_shap_elasticnet_consistent_features"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png"
+    },
+    {
+      "id": "loeo_residual_analysis_group",
+      "label": "LOEO Residual Analysis Suite: Scatter, Per-Experiment Bar, Multi-Config Overlay",
+      "nodes": [
+        "09_residuals_best_global_LOEO",
+        "09_residuals_by_experiment_best_global_LOEO",
+        "09_residuals_by_experiment_multi_LOEO",
+        "concept_loeo_cv",
+        "concept_elasticnet_best_global"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png"
+    },
+    {
+      "id": "sequential_dashboard_metrics_group",
+      "label": "Sequential Comparison Dashboards for MAE, RMSE, and R2 Metrics",
+      "nodes": [
+        "09_sequential_comparison_dashboard_MAE",
+        "09_sequential_comparison_dashboard_R2",
+        "09_sequential_comparison_dashboard_RMSE",
+        "09_tuning_effect_MAE",
+        "09_tuning_effect_RMSE",
+        "concept_sequential_4stages"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png"
+    },
+    {
+      "id": "worst_experiments_group",
+      "label": "Worst-Case Experiments: exp66(+47µm), exp69(+49µm), exp76(-50µm), exp77(-82µm)",
+      "nodes": [
+        "concept_exp66_exp69_overestimation",
+        "concept_exp76_exp77_underestimation",
+        "concept_residual_pattern_global",
+        "09_residuals_by_experiment_best_global_LOEO"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png"
+    },
+    {
+      "id": "xgboost_shap_interpretability_group",
+      "label": "SHAP Interpretability for XGBoost N_CT_random Model",
+      "nodes": [
+        "10_shap_bar_xgboost_n_ct_random",
+        "10_shap_summary_xgboost_n_ct_random",
+        "concept_shap_xgboost_top5_n_ct_random",
+        "concept_shap_xgboost_directions",
+        "concept_shap_xgboost_uses_more_features",
+        "feature_A_p1_std"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

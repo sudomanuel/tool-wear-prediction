@@ -1,0 +1,4 @@
+model,branch_id,data_branch,tuning_method,validation_type_used_for_selection,reason_selected_for_shap,shap_note
+ElasticNet,A_ST_feature_noise,A,none,loeo,1st by LOEO MAE,top1=A_p1_skewness (|SHAP|=2.186)
+ElasticNet,N_ST,N,none,loeo,2nd by LOEO MAE,top1=A_p1_skewness (|SHAP|=2.190)
+XGBoost,N_CT_random,N,random,loeo,best non-linear in LOEO,top1=A_p1_std (|SHAP|=8.579)

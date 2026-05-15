@@ -1,0 +1,72 @@
+file_path,file_type,stage_number,stage_name,branch_id,data_branch,tuning_method,augmentation_strategy,validation_method,description,generated_by_script
+outputs/metrics/layered_pipeline/00_cleanup_report.csv,csv,00,auditoria_y_diagrama,,,,,loeo,auditoria y archivado de outputs deprecated,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/00_leakage_checks.csv,csv,00,auditoria_y_diagrama,,,,,loeo,verificacion anti-leakage de los splits y features,run_layered_pipeline.py
+outputs/figures/layered_pipeline/00_layered_flow_diagram_no_holdout.png,figure,00,auditoria_y_diagrama,,,,,loeo,diagrama metodologico del flujo,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/01_feature_columns.csv,csv,01,dataset_features,,,,,loeo,lista de features ML usadas,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/01_modeling_dataset_summary.csv,csv,01,dataset_features,,,,,loeo,"resumen del dataset (n_exp, VB range, etc.)",run_layered_pipeline.py
+outputs/metrics/layered_pipeline/02_loeo_folds.csv,csv,02,splits_loeo_folds,,,,,loeo,definicion de los 10 folds LOEO,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/03_N_ST_loeo_metrics.csv,csv,03,baseline_N_ST,N_ST,N,none,,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/04_N_CT_random_loeo_metrics.csv,csv,04,tuning_N_CT_random,N_CT_RANDOM,N,random,,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/05_N_CT_grid_loeo_metrics.csv,csv,05,tuning_N_CT_grid,N_CT_GRID,N,grid,,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/06_A_ST_feature_noise_loeo_metrics.csv,csv,06,augmentation_A_ST,A_ST_FEATURE_NOISE,A,none,feature_noise,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/06_A_ST_feature_scaling_loeo_metrics.csv,csv,06,augmentation_A_ST,A_ST_FEATURE_SCALING,A,none,feature_scaling,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/06_A_ST_grouped_scaling_loeo_metrics.csv,csv,06,augmentation_A_ST,A_ST_GROUPED_SCALING,A,none,grouped_scaling,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/07_A_CT_random_feature_noise_loeo_metrics.csv,csv,07,augmentation_A_CT_random,A_CT_RANDOM_FEATURE_NOISE,A,random,feature_noise,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/07_A_CT_random_feature_scaling_loeo_metrics.csv,csv,07,augmentation_A_CT_random,A_CT_RANDOM_FEATURE_SCALING,A,random,feature_scaling,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/07_A_CT_random_grouped_scaling_loeo_metrics.csv,csv,07,augmentation_A_CT_random,A_CT_RANDOM_GROUPED_SCALING,A,random,grouped_scaling,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/08_A_CT_grid_feature_noise_loeo_metrics.csv,csv,08,augmentation_A_CT_grid,A_CT_GRID_FEATURE_NOISE,A,grid,feature_noise,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/08_A_CT_grid_feature_scaling_loeo_metrics.csv,csv,08,augmentation_A_CT_grid,A_CT_GRID_FEATURE_SCALING,A,grid,feature_scaling,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/08_A_CT_grid_grouped_scaling_loeo_metrics.csv,csv,08,augmentation_A_CT_grid,A_CT_GRID_GROUPED_SCALING,A,grid,grouped_scaling,loeo,,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_all_metrics.csv,csv,09,ranking_y_resumenes,,,,,loeo,todas las metricas LOEO (modelo x rama),run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_augmentation_effect_summary.csv,csv,09,ranking_y_resumenes,,,,,loeo,"comparacion N vs A_{noise,scaling,grouped} por tuning",run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_branch_best_summary.csv,csv,09,ranking_y_resumenes,,,,,loeo,mejor modelo y metricas por rama,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_branch_execution_summary.csv,csv,09,ranking_y_resumenes,,,,,loeo,"estado, duracion y notas por rama",run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_delta_vs_baseline.csv,csv,09,ranking_y_resumenes,,,,,loeo,delta de metricas vs baseline N_ST (negativo = mejora),run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_final_layered_ranking.csv,csv,09,ranking_y_resumenes,,,,,loeo,ranking ordenado por MAE LOEO,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_model_evolution_by_model.csv,csv,09,ranking_y_resumenes,,,,,loeo,top-3 modelos siguiendo las 12 ramas (largo),run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_model_evolution_summary.csv,csv,09,ranking_y_resumenes,,,,,loeo,"mejor (modelo, rama) en cada una de las 12 ramas + delta vs previa/baseline",run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_predictions_overlay_selected.csv,csv,09,ranking_y_resumenes,,,,,loeo,predicciones de las 5 configuraciones del scatter multi-overlay,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_random_vs_grid_summary.csv,csv,09,ranking_y_resumenes,,,,,loeo,comparacion directa Random vs Grid,run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_tuning_effect_summary.csv,csv,09,ranking_y_resumenes,,,,,loeo,"comparacion ST vs Random vs Grid por (data, aug)",run_layered_pipeline.py
+outputs/metrics/layered_pipeline/09_tuning_results_all.csv,csv,09,ranking_y_resumenes,,,,,loeo,"best_params y best_cv_score de cada (modelo, rama)",run_layered_pipeline.py
+outputs/predictions/layered_pipeline/09_predictions_all_branches.csv,csv,09,ranking_y_resumenes,,,,,loeo,"predicciones por experimento de cada (modelo, rama)",run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_actual_vs_predicted_best_global_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,predicciones del mejor modelo LOEO,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_actual_vs_predicted_multi_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,predicciones del mejor modelo LOEO,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_augmentation_effect_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,N vs A_{strategies} por tuning method,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_augmentation_effect_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,N vs A_{strategies} por tuning method,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_best_model_per_branch_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,mejor modelo por rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_branch_performance_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,best metrica por rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_branch_performance_MAPE.png,figure,09,ranking_y_resumenes,,,,,loeo,best metrica por rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_branch_performance_R2.png,figure,09,ranking_y_resumenes,,,,,loeo,best metrica por rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_branch_performance_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,best metrica por rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_delta_MAE_vs_baseline_N_ST.png,figure,09,ranking_y_resumenes,N_ST,N,none,,loeo,delta de metrica respecto al baseline N_ST,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_delta_RMSE_vs_baseline_N_ST.png,figure,09,ranking_y_resumenes,N_ST,N,none,,loeo,delta de metrica respecto al baseline N_ST,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_heatmap_model_vs_branch_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,heatmap modelo x rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_heatmap_model_vs_branch_R2.png,figure,09,ranking_y_resumenes,,,,,loeo,heatmap modelo x rama (LOEO),run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_model_evolution_MAE_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,"evolucion: como cambia la metrica rama por rama (12 ramas, linea principal + top-3 modelos)",run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_model_evolution_MAPE_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,"evolucion: como cambia la metrica rama por rama (12 ramas, linea principal + top-3 modelos)",run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_model_evolution_R2_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,"evolucion: como cambia la metrica rama por rama (12 ramas, linea principal + top-3 modelos)",run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_model_evolution_RMSE_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,"evolucion: como cambia la metrica rama por rama (12 ramas, linea principal + top-3 modelos)",run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_random_vs_grid_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,Random vs Grid lado a lado + delta,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_random_vs_grid_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,Random vs Grid lado a lado + delta,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_residuals_best_global_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,distribucion de residuales del mejor LOEO,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,residuales por experimento del mejor LOEO,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_residuals_by_experiment_multi_LOEO.png,figure,09,ranking_y_resumenes,,,,,loeo,residuales por experimento del mejor LOEO,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,dashboard 2x2 con la historia completa,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png,figure,09,ranking_y_resumenes,,,,,loeo,dashboard 2x2 con la historia completa,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,dashboard 2x2 con la historia completa,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_tuning_effect_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,ST vs Random vs Grid lado a lado,run_layered_pipeline.py
+outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,ST vs Random vs Grid lado a lado,run_layered_pipeline.py
+outputs/metrics/shap/10_shap_feature_ranking_elasticnet_a_st_feature_noise.csv,csv,10,shap,A_ST_FEATURE_NOISE,A,none,feature_noise,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
+outputs/metrics/shap/10_shap_feature_ranking_elasticnet_n_st.csv,csv,10,shap,N_ST,N,none,,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
+outputs/metrics/shap/10_shap_feature_ranking_xgboost_n_ct_random.csv,csv,10,shap,N_CT_RANDOM,N,random,,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
+outputs/metrics/shap/10_shap_selected_models.csv,csv,10,shap,,,,,loeo,modelos elegidos para SHAP y razon,run_layered_pipeline.py
+outputs/metrics/shap/10_shap_values_elasticnet_a_st_feature_noise.csv,csv,10,shap,A_ST_FEATURE_NOISE,A,none,feature_noise,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
+outputs/metrics/shap/10_shap_values_elasticnet_n_st.csv,csv,10,shap,N_ST,N,none,,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
+outputs/metrics/shap/10_shap_values_xgboost_n_ct_random.csv,csv,10,shap,N_CT_RANDOM,N,random,,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
+outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png,figure,10,shap,A_ST_FEATURE_NOISE,A,none,feature_noise,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
+outputs/figures/shap/10_shap_bar_elasticnet_n_st.png,figure,10,shap,N_ST,N,none,,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
+outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png,figure,10,shap,N_CT_RANDOM,N,random,,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
+outputs/figures/shap/10_shap_summary_elasticnet_a_st_feature_noise.png,figure,10,shap,A_ST_FEATURE_NOISE,A,none,feature_noise,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
+outputs/figures/shap/10_shap_summary_elasticnet_n_st.png,figure,10,shap,N_ST,N,none,,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
+outputs/figures/shap/10_shap_summary_xgboost_n_ct_random.png,figure,10,shap,N_CT_RANDOM,N,random,,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py

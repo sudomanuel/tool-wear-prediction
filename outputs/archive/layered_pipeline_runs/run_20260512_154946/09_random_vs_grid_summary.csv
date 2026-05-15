@@ -1,0 +1,5 @@
+data_branch,augmentation_strategy,best_MAE_grid,best_MAE_random,delta_grid_minus_random,winner
+A,feature_noise,35.98316857921169,35.98316857921169,0.0,practical_tie (<1 µm)
+A,feature_scaling,27.33827019113839,27.33827019113839,0.0,practical_tie (<1 µm)
+A,grouped_scaling,28.63168660524925,28.63168660524925,0.0,practical_tie (<1 µm)
+N,none,27.663196671987105,27.663196671987105,0.0,practical_tie (<1 µm)

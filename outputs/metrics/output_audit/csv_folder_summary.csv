@@ -1,0 +1,8 @@
+folder,n_files,active_files,deprecated_files,stale_files,supplemental_files,notes
+interim,1,1,0,0,0,
+interim/augmentation,3,3,0,0,0,
+metrics,5,5,0,0,0,
+metrics/layered_pipeline,27,27,0,0,0,
+metrics/shap,7,7,0,0,0,
+predictions/layered_pipeline,1,1,0,0,0,
+processed,2,2,0,0,0,

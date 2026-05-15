@@ -1,0 +1,7 @@
+stage_order,stage_name,branch_group,selected_branch_id,model,MAE,RMSE,R2,MAPE_%,delta_MAE_vs_previous_stage,delta_MAE_vs_baseline,interpretation
+1,Baseline (N_ST),N_ST,N_ST,ElasticNet,26.959668383421967,37.87890222950762,0.6016283372215274,17.038140684518165,0.0,0.0,baseline
+2,N + Random (N_CT_random),N_CT_random,N_CT_random,ElasticNet,27.663196671987105,37.43323032800208,0.6109474350126594,17.164442088324154,0.7035282885651384,0.7035282885651384,tuning: negligible change (<1 µm) vs previous stage
+3,N + Grid (N_CT_grid),N_CT_grid,N_CT_grid,ElasticNet,27.663196671987105,37.43323032800208,0.6109474350126594,17.164442088324154,0.0,0.7035282885651384,tuning: negligible change (<1 µm) vs previous stage
+4,A · ST (best aug),A_ST,A_ST_feature_noise,ElasticNet,26.92359162845846,37.89671760708791,0.6012535211549672,16.992984657168577,-0.7396050435286448,-0.036076754963506374,augmentation: negligible change (<1 µm) vs previous stage  ·  BEST OVERALL
+5,A · Random (best aug),A_CT_random,A_CT_random_feature_scaling,ElasticNet,27.33827019113839,34.325109221720645,0.6728721452753981,17.959630966016153,0.41467856267992786,0.3786018077164215,tuning: negligible change (<1 µm) vs previous stage
+6,A · Grid (best aug),A_CT_grid,A_CT_grid_feature_scaling,ElasticNet,27.33827019113839,34.325109221720645,0.6728721452753981,17.959630966016153,0.0,0.3786018077164215,tuning: negligible change (<1 µm) vs previous stage

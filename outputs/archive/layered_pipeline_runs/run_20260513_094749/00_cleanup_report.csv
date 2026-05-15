@@ -1,0 +1,6 @@
+item_checked,status,action_taken,notes
+target_column_is_VB_um,PASS,,target encontrado: VB_um
+no_forbidden_targets,PASS,,ninguna
+prior_layered_outputs,PASS,archivados 50,a outputs\archive\layered_pipeline_runs\run_20260512_162018
+deprecated_holdout_archived,PASS,archivados 0 archivos deprecated,a outputs\archive\deprecated_holdout\archived_20260512_162018
+feature_columns_clean,PASS,,"features=203, leaks=[]"

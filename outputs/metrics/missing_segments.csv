@@ -1,0 +1,5 @@
+experiment_id,expected_file,direction,contact_id,status
+77,A77_p5.txt,axial,5,MISSING
+77,A77_p6.txt,axial,6,MISSING
+77,R77_p5.txt,rotational,5,MISSING
+77,R77_p6.txt,rotational,6,MISSING

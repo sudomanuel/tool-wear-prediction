@@ -1,0 +1,39 @@
+folder,n_files,active_files,deprecated_files,stale_files,supplemental_files,notes
+data_quality/missing_segments_by_experiment.png,1,1,0,0,0,audit_data (paso pre-flujo)
+data_quality/raw_file_count_by_experiment.png,1,1,0,0,0,audit_data (paso pre-flujo)
+data_quality/vb_distribution.png,1,1,0,0,0,audit_data (paso pre-flujo)
+data_quality/vb_vs_experiment_order.png,1,1,0,0,0,audit_data (paso pre-flujo)
+features/feature_correlation_heatmap_top30.png,1,0,0,0,1,"exploracion de features, no parte del ranking"
+features/feature_missingness.png,1,0,0,0,1,"exploracion de features, no parte del ranking"
+features/top_correlated_features_with_VB.png,1,0,0,0,1,"exploracion de features, no parte del ranking"
+layered_pipeline/00_layered_flow_diagram_no_holdout.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_actual_vs_predicted_best_global_LOEO.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_augmentation_effect_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_augmentation_effect_RMSE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_best_model_per_branch_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_branch_performance_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_branch_performance_MAPE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_branch_performance_R2.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_branch_performance_RMSE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_delta_MAE_vs_baseline_N_ST.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_delta_RMSE_vs_baseline_N_ST.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_heatmap_model_vs_branch_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_heatmap_model_vs_branch_R2.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_random_vs_grid_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_random_vs_grid_RMSE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_residuals_best_global_LOEO.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_residuals_by_experiment_best_global_LOEO.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_sequential_comparison_dashboard_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_sequential_comparison_dashboard_R2.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_sequential_comparison_dashboard_RMSE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_tuning_effect_MAE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+layered_pipeline/09_tuning_effect_RMSE.png,1,1,0,0,0,principal: 12 ramas LOEO-CV
+shap/10_shap_bar_elasticnet_a_st_feature_noise.png,1,1,0,0,0,"interpretabilidad, regenerada por layered"
+shap/10_shap_bar_elasticnet_n_st.png,1,1,0,0,0,"interpretabilidad, regenerada por layered"
+shap/10_shap_bar_xgboost_n_ct_random.png,1,1,0,0,0,"interpretabilidad, regenerada por layered"
+shap/10_shap_summary_elasticnet_a_st_feature_noise.png,1,1,0,0,0,"interpretabilidad, regenerada por layered"
+shap/10_shap_summary_elasticnet_n_st.png,1,1,0,0,0,"interpretabilidad, regenerada por layered"
+shap/10_shap_summary_xgboost_n_ct_random.png,1,1,0,0,0,"interpretabilidad, regenerada por layered"
+signals/example_contacts_grid_exp66.png,1,1,0,0,0,audit_data (paso pre-flujo)
+signals/example_signal_A_p1.png,1,1,0,0,0,audit_data (paso pre-flujo)
+signals/example_signal_R_p1.png,1,1,0,0,0,audit_data (paso pre-flujo)

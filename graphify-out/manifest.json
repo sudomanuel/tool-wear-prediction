@@ -1,0 +1,306 @@
+{
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\audit_data.py": {
+    "mtime": 1778575232.6186545,
+    "hash": "57dbe2ae5417bfa5d7e3a70f85b57380"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\audit_outputs.py": {
+    "mtime": 1778594831.6032813,
+    "hash": "e4d11c25995a7c74e53028cb7d5732aa"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\build_dataset.py": {
+    "mtime": 1778575268.4903924,
+    "hash": "1bd9cbfefe2cbf228f367b5071e4da1d"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\build_pipeline_presentation.py": {
+    "mtime": 1778663295.9543238,
+    "hash": "4cc336816ee4bd2d3255e60234086114"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\evaluate_models.py": {
+    "mtime": 1778575943.8554044,
+    "hash": "032f4d4140e3d438afe4156b5465723a"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\run_augmentation_experiment.py": {
+    "mtime": 1778578851.5099864,
+    "hash": "b55017b2210946902b66af2be35115b0"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\run_full_pipeline.py": {
+    "mtime": 1778575577.832826,
+    "hash": "f61e5fcc8be3ee9b7d9eeaad397ed8d7"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\run_layered_pipeline.py": {
+    "mtime": 1778658444.6170075,
+    "hash": "6d4535f45c1e81465681619b11db0a6e"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\run_shap_analysis.py": {
+    "mtime": 1778576101.1588821,
+    "hash": "d9ce2d4a9d9b9a106ba3f5989be33352"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\run_tuning.py": {
+    "mtime": 1778578873.8171737,
+    "hash": "a3cd3c7912964a6059cf4629185e1e7f"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\scripts\\train_baselines.py": {
+    "mtime": 1778575427.3806567,
+    "hash": "88249fc079b5d2f6d9f1ddb55ee2b163"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\augmentation.py": {
+    "mtime": 1778528362.5261908,
+    "hash": "55ce96e709e237b822337ffda7119425"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\config.py": {
+    "mtime": 1778575177.1285923,
+    "hash": "1183a27a953b679db96507e2d80dae25"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\dataset_builder.py": {
+    "mtime": 1778575258.4178782,
+    "hash": "3e4bf129b33401462595f65192e9c54e"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\data_loader.py": {
+    "mtime": 1778528223.807438,
+    "hash": "92f7b6bc013961d4462b957f763100c2"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\data_quality.py": {
+    "mtime": 1778575727.278895,
+    "hash": "fecd79dea74d04b8bcfd95276509c16f"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\evaluation.py": {
+    "mtime": 1778575934.233266,
+    "hash": "a3473074833c9a0e5013aaab8fd1d290"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\feature_extraction.py": {
+    "mtime": 1778528244.901528,
+    "hash": "97d6733fe510b1ad9fa86ac26df84cb4"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\filename_parser.py": {
+    "mtime": 1778528212.4800367,
+    "hash": "6f7e8da43b26449b4561c0df695796f4"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\layered_pipeline.py": {
+    "mtime": 1778658322.062316,
+    "hash": "c2c754def9c15d5c8ead5372009b2e60"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\layered_visuals.py": {
+    "mtime": 1778661250.3300357,
+    "hash": "545307527a963b8aff53561784ef79b3"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\leakage_audit.py": {
+    "mtime": 1778575331.9307995,
+    "hash": "1ba7dfb93328cd08bb4267efe4c195f8"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\modeling.py": {
+    "mtime": 1778528303.483008,
+    "hash": "28d4cb69f1a21bf2ce58ee2b507ba0c1"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\preprocessing.py": {
+    "mtime": 1778528230.190359,
+    "hash": "642566547f6dfe2027ccff09e6dc4e53"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\shap_analysis.py": {
+    "mtime": 1778593283.876632,
+    "hash": "f800b7da52db88fa1291c21b3d0e0f58"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\splitting.py": {
+    "mtime": 1778575296.8093195,
+    "hash": "a09bfda4b1a19213737616ffbbb18c05"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\tuning.py": {
+    "mtime": 1778528343.1961195,
+    "hash": "f533abc122e2fbd11c9baabf09009ccd"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\visualization.py": {
+    "mtime": 1778578917.6648066,
+    "hash": "366b71ccf671494e2a0ac522a2733776"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\src\\phm\\__init__.py": {
+    "mtime": 1778528188.3518372,
+    "hash": "b18c0ea4d6a7c345dbd2c8a763e8700d"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\README.md": {
+    "mtime": 1778595554.6128948,
+    "hash": "0a15ce38fcc79fb60ca9759a27b95c76"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\requirements.txt": {
+    "mtime": 1778575158.9058976,
+    "hash": "366ad4517676b02a76c63d8c06b17cf2"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\reports\\methodology_notes.md": {
+    "mtime": 1778595596.0577376,
+    "hash": "7e9592b5f70a110d84751e2849ba6091"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\data_quality\\missing_segments_by_experiment.png": {
+    "mtime": 1778660273.3040464,
+    "hash": "9ccaaa1bb647268583794525d0ad786a"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\data_quality\\raw_file_count_by_experiment.png": {
+    "mtime": 1778660273.223632,
+    "hash": "f9289f3afe9195fe68c4b05f029744bf"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\data_quality\\vb_distribution.png": {
+    "mtime": 1778660273.4149075,
+    "hash": "d2bc67206df5b670b0fdf670f2249547"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\data_quality\\vb_vs_experiment_order.png": {
+    "mtime": 1778660273.5297024,
+    "hash": "0686e32fb3f0edf362e8db584f2ff12a"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\features\\feature_correlation_heatmap_top30.png": {
+    "mtime": 1778660349.1780963,
+    "hash": "4885484f3a6e96a8bfc53c315adcd4cf"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\features\\feature_missingness.png": {
+    "mtime": 1778660348.6585846,
+    "hash": "951a3d51eba55149b58bf297a5c6aa6f"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\features\\top_correlated_features_with_VB.png": {
+    "mtime": 1778660349.3496501,
+    "hash": "36172d045877307321361bb3c01857df"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\00_layered_flow_diagram_no_holdout.png": {
+    "mtime": 1778661685.0786345,
+    "hash": "d7629c9344cf1c88d4788079bb2a2920"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_actual_vs_predicted_best_global_LOEO.png": {
+    "mtime": 1778661690.9574962,
+    "hash": "8c5fd2d6a5c47f7127e1d7eb951fb5e7"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_actual_vs_predicted_multi_LOEO.png": {
+    "mtime": 1778661690.5551639,
+    "hash": "50f7df591744be81810f81f596e4ad5a"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_augmentation_effect_MAE.png": {
+    "mtime": 1778661687.890412,
+    "hash": "9217adf0bbbb91da675280a4bf4e8391"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_augmentation_effect_RMSE.png": {
+    "mtime": 1778661688.023957,
+    "hash": "32b825eeee67b1c639ea70489d8fee25"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_best_model_per_branch_MAE.png": {
+    "mtime": 1778661686.0060537,
+    "hash": "906eb0c85f05e836dc29f68c6a054e87"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_branch_performance_MAE.png": {
+    "mtime": 1778661685.2567058,
+    "hash": "0aa3a4d700128d4091fb720772be148f"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_branch_performance_MAPE.png": {
+    "mtime": 1778661685.8499424,
+    "hash": "d4db252eb5df5f3e98f1783b09ec5abb"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_branch_performance_R2.png": {
+    "mtime": 1778661685.6760626,
+    "hash": "bfee1bae3a5116d5bb223bd962b9fe49"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_branch_performance_RMSE.png": {
+    "mtime": 1778661685.4205706,
+    "hash": "7650d8e2bf23169554fe49b6966fc2d0"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_delta_MAE_vs_baseline_N_ST.png": {
+    "mtime": 1778661686.8003554,
+    "hash": "4965334080d772cf58f101269aeae57e"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_delta_RMSE_vs_baseline_N_ST.png": {
+    "mtime": 1778661686.9695897,
+    "hash": "92c9734b351987ba091e54188e7ed400"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_heatmap_model_vs_branch_MAE.png": {
+    "mtime": 1778661686.3333423,
+    "hash": "49ae6ab94f953ae8e46bae48a1db1078"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_heatmap_model_vs_branch_R2.png": {
+    "mtime": 1778661686.63347,
+    "hash": "7d2264184a17fb38cefce1b999354e8c"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_model_evolution_MAE_LOEO.png": {
+    "mtime": 1778661689.5246756,
+    "hash": "e8251649e378d2a18667df5eee9da035"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_model_evolution_MAPE_LOEO.png": {
+    "mtime": 1778661690.3187134,
+    "hash": "28a6872d24d2746901e53d76781a5091"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_model_evolution_R2_LOEO.png": {
+    "mtime": 1778661689.969417,
+    "hash": "28b36df8528615dbdab55f71c6ce53a0"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_model_evolution_RMSE_LOEO.png": {
+    "mtime": 1778661689.7509189,
+    "hash": "717e43c4b1ed21498b125b6a9302a2bb"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_random_vs_grid_MAE.png": {
+    "mtime": 1778661687.4412942,
+    "hash": "c180f5d2802d57a1dc9b7d43a8b595a1"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_random_vs_grid_RMSE.png": {
+    "mtime": 1778661687.6419208,
+    "hash": "e1e3bd3ac61934d8818b173981c1659d"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_residuals_best_global_LOEO.png": {
+    "mtime": 1778661691.0751772,
+    "hash": "d5acd93719c2b7fbfb810db68ffbc7a0"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_residuals_by_experiment_best_global_LOEO.png": {
+    "mtime": 1778661691.1891289,
+    "hash": "908742c0b7074291aaaf03e7e9faad59"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_residuals_by_experiment_multi_LOEO.png": {
+    "mtime": 1778661690.8157415,
+    "hash": "013171f198f5ca33fbcffcabcf4cec23"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_sequential_comparison_dashboard_MAE.png": {
+    "mtime": 1778661688.4335492,
+    "hash": "f77dbaafb8d79cdf3fd8653626b33837"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_sequential_comparison_dashboard_R2.png": {
+    "mtime": 1778661689.2689683,
+    "hash": "b3fa02745af61e67db721ec64ce9871a"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_sequential_comparison_dashboard_RMSE.png": {
+    "mtime": 1778661688.8477738,
+    "hash": "7387f4258bb4f5e1ae3acba298ce491b"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_tuning_effect_MAE.png": {
+    "mtime": 1778661687.1010697,
+    "hash": "51b62cd91b5277f91a8935abf0f1d1de"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\layered_pipeline\\09_tuning_effect_RMSE.png": {
+    "mtime": 1778661687.2367516,
+    "hash": "62a53f4d40995f23a7a667e873e246c3"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\shap\\10_shap_bar_elasticnet_a_st_feature_noise.png": {
+    "mtime": 1778661691.4032297,
+    "hash": "ea4cd36d511d06f83102bb1691c653c6"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\shap\\10_shap_bar_elasticnet_n_st.png": {
+    "mtime": 1778661691.9053078,
+    "hash": "2961323030a112d5c3fefc81018ca137"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\shap\\10_shap_bar_xgboost_n_ct_random.png": {
+    "mtime": 1778661692.5579622,
+    "hash": "bbbff3dc783f4f06a835125fe01e11c9"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\shap\\10_shap_summary_elasticnet_a_st_feature_noise.png": {
+    "mtime": 1778661691.711339,
+    "hash": "c204307ed457966d83a1cb1518fb7175"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\shap\\10_shap_summary_elasticnet_n_st.png": {
+    "mtime": 1778661692.2115428,
+    "hash": "93313c8453110b95381a044ef9dde414"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\shap\\10_shap_summary_xgboost_n_ct_random.png": {
+    "mtime": 1778661692.868848,
+    "hash": "704b38c62f7f271322ec04e0ab16a4d2"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\signals\\example_contacts_grid_exp66.png": {
+    "mtime": 1778660277.362905,
+    "hash": "06e3fd4906860ab283c8f198ce00ce1b"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\signals\\example_signal_A_p1.png": {
+    "mtime": 1778660274.121539,
+    "hash": "53161f281ff9600d77d963e6f3efafba"
+  },
+  "D:\\KSF\\PHM\\phm_tool_wear\\outputs\\figures\\signals\\example_signal_R_p1.png": {
+    "mtime": 1778660274.7335005,
+    "hash": "b3a30bdf7fd49652fc66928bd3d9d816"
+  }
+}
