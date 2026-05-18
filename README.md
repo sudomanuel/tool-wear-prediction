@@ -23,7 +23,7 @@ pip install -r requirements.txt
 # Opcion A: pipeline lineal (7 pasos, recomendado primera vez)
 python scripts/run_full_pipeline.py
 
-# Opcion B: pipeline experimental por capas (12 ramas + dashboard)
+# Opcion B: pipeline experimental por capas (36 ramas + dashboard)
 python scripts/run_layered_pipeline.py
 ```
 
@@ -31,12 +31,16 @@ python scripts/run_layered_pipeline.py
 
 | # | Modelo | Rama | MAE (µm) | R² |
 |---|---|---|---|---|
-| 1 | ElasticNet | A_ST_feature_noise | 26.92 | 0.601 |
-| 2 | ElasticNet | N_ST (baseline) | 26.96 | 0.602 |
-| 3 | Lasso | N_CT_random (tuned) | 27.86 | 0.498 |
+| 1 | **ElasticNet** | **SOLO_A_N_CT_random** | **18.79** | **0.817** |
+| 2 | ElasticNet | SOLO_A_N_CT_grid | 18.79 | 0.817 |
+| 3 | ElasticNet | SOLO_A_A_ST_feature_noise | 21.24 | 0.772 |
+| 4 | ElasticNet | SOLO_A_N_ST | 21.63 | 0.765 |
 
-Los **modelos lineales regularizados** dominan. Tuning empeora. Augmentation
-no aporta. Modelos no-lineales sobreajustan. Mas detalle en
+**Hallazgo clave (v2):** la bifurcacion por tipo de senal revela que
+**SOLO_A** (solo features axiales) supera a FUSION (axial+rotacional). El
+top-10 LOEO esta dominado integramente por SOLO_A. La fusion estaba metiendo
+redundancia. Modelos lineales regularizados (ElasticNet, Ridge) ganan
+porque el ratio p/n exige L1+L2. Mas detalle en
 [Resultados actuales](#resultados-actuales).
 
 ---
@@ -118,9 +122,9 @@ sin sobrescribirse:
 | | **`run_full_pipeline.py`** (lineal) | **`run_layered_pipeline.py`** (por capas) |
 |---|---|---|
 | **Filosofia** | flujo secuencial paso a paso | comparacion sistematica en arbol |
-| **Pasos** | 7 etapas | 12 ramas × 2 validaciones |
-| **Modelos evaluados** | 8 baselines + 7 tuneados | 8 × 12 × 2 = 192 evaluaciones |
-| **Tiempo** | ~2 min | ~2 min |
+| **Pasos** | 7 etapas | 36 ramas LOEO-only |
+| **Modelos evaluados** | 8 baselines + 7 tuneados | 8 × 36 = 288 evaluaciones |
+| **Tiempo** | ~2 min | ~5 min |
 | **Outputs** | `outputs/{metrics,figures,...}/` | `outputs/.../layered_pipeline/` |
 | **Para** | primera corrida / pipeline tipico | comparacion sistematica defendible |
 
@@ -184,80 +188,138 @@ purga CSVs con nombres legacy al inicio para mantener limpio
 
 ## Pipeline por capas `run_layered_pipeline.py`
 
-Reorganiza el mismo experimento como un **arbol metodologico** donde
-cada celda genera sus propios CSVs:
+Reorganiza el mismo experimento como un **arbol metodologico** con
+bifurcacion inicial por tipo de senal (v2):
 
 ```
 D (dataset = experiment_features.csv)
 │
-├── N (real)
-│   ├── N_ST            (sin tuning)         → HO + LOEO
-│   ├── N_CT_random     (RandomizedSearchCV) → HO + LOEO
-│   └── N_CT_grid       (GridSearchCV)       → HO + LOEO
-│
-└── A (augmented, una rama por estrategia)
-    ├── A_ST_<s>        (sin tuning)         → HO + LOEO
-    ├── A_CT_random_<s> (RandomizedSearchCV) → HO + LOEO
-    └── A_CT_grid_<s>   (GridSearchCV)       → HO + LOEO
+├── FUSION  (todas las features: A + R + cruzadas, 203 feats)
+├── SOLO_A  (solo features axiales A_*, 101 feats)
+└── SOLO_R  (solo features rotacionales R_*, 99 feats)
 
-  con s ∈ {feature_noise, feature_scaling, grouped_scaling}
+      ↓  (cada subset se procesa por el mismo arbol)
+
+  ├── N (real)
+  │   ├── N_ST            (sin tuning)         → LOEO
+  │   ├── N_CT_random     (RandomizedSearchCV) → LOEO
+  │   └── N_CT_grid       (GridSearchCV)       → LOEO
+  │
+  └── A (augmented, una rama por estrategia)
+      ├── A_ST_<s>        (sin tuning)         → LOEO
+      ├── A_CT_random_<s> (RandomizedSearchCV) → LOEO
+      └── A_CT_grid_<s>   (GridSearchCV)       → LOEO
+
+    con s ∈ {feature_noise, feature_scaling, grouped_scaling}
 
 → comparacion + ranking final (LOEO MAE prioritario)
 → SHAP (top-2 LOEO + mejor no-lineal) sobre datos REALES
 ```
 
-**Total: 12 ramas × 2 validaciones × 8 modelos = 192 evaluaciones**
-recogidas en `all_metrics.csv` con etiquetas explicitas
-(`data_branch`, `tuning_method`, `validation_type`,
-`augmentation_strategy`, `branch_id`).
+**Formato de branch_id:** `{SUBSET}_{N|A}_{ST|CT_*}[_{aug}]`. Ejemplos:
+- `FUSION_N_ST`, `FUSION_A_CT_grid_feature_noise`
+- `SOLO_A_N_CT_random`, `SOLO_A_A_ST_grouped_scaling`
+- `SOLO_R_N_CT_grid`, `SOLO_R_A_CT_grid_feature_scaling`
+
+**Total: 3 subsets × 12 etapas × 8 modelos = 288 evaluaciones**
+recogidas en `09_all_metrics.csv` con etiquetas explicitas
+(`feature_subset`, `data_branch`, `tuning_method`, `validation_type`,
+`augmentation_strategy`, `branch_id`, `n_features`).
 
 | Sigla | Significado |
 |---|---|
 | **D** | Dataset listo |
+| **FUSION** | Todas las features (A + R + cruzadas) |
+| **SOLO_A** | Solo features axiales (columnas `A_*`) |
+| **SOLO_R** | Solo features rotacionales (columnas `R_*`) |
 | **N** | Data real, sin augmentation |
 | **A** | Train aumentado, test siempre real |
 | **ST** | Sin tuning — defaults |
 | **CT** | Con tuning — separado en `random` y `grid` |
-| **HO** | Hold-out 8/2 |
-| **LOEO** | Leave-One-Experiment-Out (metrica honesta) |
+| **LOEO** | Leave-One-Experiment-Out (metrica honesta del proyecto) |
+
+> **Hold-out fue eliminado del flujo activo** porque con n_test=2 las
+> metricas oscilan demasiado (R² puede pasar de 0.9 a -2 con otro
+> seed). LOEO es la unica validacion confiable con n=10.
 
 **Compromiso documentado:** la busqueda de hiperparametros se ejecuta
-una sola vez sobre el train del hold-out con `GroupKFold` interno. En
-LOEO se *reutilizan* esos mejores parametros y solo se refitea por
+una sola vez por rama con `GroupKFold(k=5)` sobre los 10 experimentos.
+En LOEO se *reutilizan* esos mejores parametros y solo se refitea por
 fold. Esto evita 10× re-tuning por modelo (nested-CV completo) que
 con 10 experimentos amplificaria el sobreajuste mas que aportar.
 Detalle en `reports/methodology_notes.md`.
 
+### Por que la bifurcacion por subset de senal
+
+Un EDA exploratorio (`scripts/eda_signal_fusion.py`) revelo que:
+- La contribucion media a `VB_um` esta balanceada (|r|=0.32 axial vs
+  0.39 rotacional), pero...
+- La **redundancia A-R por contacto es alta** (|r|=0.70 promedio,
+  hasta 0.93 en contactos 5-6).
+- Fusionar agrega ruido sin aportar informacion complementaria.
+
+Un experimento aislado (`scripts/experiment_signal_branch.py`)
+confirmo que **SOLO_A** mejora consistentemente sobre FUSION para
+modelos lineales regularizados. Esto motivo la integracion en el
+pipeline principal.
+
 ### Outputs especificos del flujo por capas
+
+Los CSVs siguen una convencion de prefijo numerico por etapa
+(`00_..11_`) y branch_id explicito:
 
 ```
 outputs/metrics/layered_pipeline/
-  cleanup_report.csv              auditoria de impurezas
-  leakage_checks.csv              10 checks formales
-  branch_execution_summary.csv    12 ramas con status + tiempo
-  all_metrics.csv                 192 filas (model × branch × validation)
-  tuning_results_all.csv          best_params + best_cv_score por modelo/rama
-  augmentation_results_all.csv    sub-vista solo data_branch=A
-  final_layered_ranking.csv       ranking con rank + interpretation_note
-  shap_selected_models.csv        top-2 LOEO + mejor no-lineal
+  00_cleanup_report.csv              auditoria de impurezas
+  00_leakage_checks.csv              10 checks formales
+  01_feature_columns.csv             203 features ML usadas
+  01_modeling_dataset_summary.csv    resumen del dataset (n_exp, VB range)
+  02_loeo_folds.csv                  10 folds LOEO
+  03_{SUBSET}_N_ST_loeo_metrics.csv  (×3 subsets)  baseline ST
+  04_{SUBSET}_N_CT_random_loeo_metrics.csv (×3)    tuneado N (random)
+  05_{SUBSET}_N_CT_grid_loeo_metrics.csv (×3)      tuneado N (grid)
+  06_{SUBSET}_A_ST_{aug}_loeo_metrics.csv (×9)     augmented ST
+  07_{SUBSET}_A_CT_random_{aug}_loeo_metrics.csv (×9)  augmented + random
+  08_{SUBSET}_A_CT_grid_{aug}_loeo_metrics.csv (×9)    augmented + grid
+  09_all_metrics.csv                 288 filas (model × branch)
+  09_final_layered_ranking.csv       ranking con rank + interpretation_note
+  09_branch_best_summary.csv         mejor (model, metrica) por rama
+  09_delta_vs_baseline.csv           Δ vs FUSION_N_ST
+  09_tuning_effect_summary.csv       ST vs Random vs Grid por (subset, aug)
+  09_augmentation_effect_summary.csv N vs A_{strategies} por tuning
+  09_random_vs_grid_summary.csv      Random vs Grid comparado
+  09_branch_execution_summary.csv    36 ramas con status + duracion
+  09_tuning_results_all.csv          best_params por (modelo, rama)
+  09_model_evolution_summary.csv     mejor por etapa (36 etapas)
+  09_model_evolution_by_model.csv    top-3 modelos a lo largo de las etapas
+  09_figure_purpose_map.csv          mapa de cada figura → pregunta
+  09_predictions_overlay_selected.csv predicciones de las 5 configs comparadas
 
 outputs/predictions/layered_pipeline/
-  predictions_all_branches.csv    VB_real/pred/residual/abs_error/pct_error
-                                  por (model, branch, validation, fold, exp)
+  09_predictions_all_branches.csv    VB_real/pred/residual/abs_error
+                                     por (model, branch, fold, exp)
 
 outputs/figures/layered_pipeline/
-  layered_flow_diagram.png        arbol metodologico con ganador anotado
-  best_model_per_branch_mae.png   mejor modelo de cada rama
-  mae_by_branch.png  rmse_by_branch.png  r2_by_branch.png  mape_by_branch.png
-  sequential_comparison_MAE.png   dashboard de 4 paneles
-  sequential_comparison_RMSE.png  sequential_comparison_R2.png
-  actual_vs_predicted_best_global.png
-  residuals_best_global.png  residuals_by_experiment_best_global.png
+  00_layered_flow_diagram_no_holdout.png   arbol metodologico
+  09_branch_performance_{MAE,RMSE,R2,MAPE}.png  best por rama
+  09_best_model_per_branch_MAE.png   mejor modelo de cada rama
+  09_heatmap_model_vs_branch_{MAE,R2}.png  heatmap 8×36
+  09_delta_{MAE,RMSE}_vs_baseline_FUSION_N_ST.png
+  09_tuning_effect_{MAE,RMSE}.png    ST/Random/Grid lado a lado
+  09_random_vs_grid_{MAE,RMSE}.png   Random vs Grid + delta
+  09_augmentation_effect_{MAE,RMSE}.png
+  09_sequential_comparison_dashboard_{MAE,RMSE,R2}.png   dashboard 2×2
+  09_model_evolution_{MAE,RMSE,R2,MAPE}_LOEO.png         evolucion 36 etapas
+  09_actual_vs_predicted_multi_LOEO.png     5 configs superpuestas
+  09_residuals_by_experiment_multi_LOEO.png
+  09_actual_vs_predicted_best_global_LOEO.png
+  09_residuals_{best_global,by_experiment_best_global}_LOEO.png
 
-outputs/metrics/shap/   shap_feature_ranking_<model>_<branch>.csv
-                        shap_values_<model>_<branch>.csv
-outputs/figures/shap/   shap_bar_<model>_<branch>.png
-                        shap_summary_<model>_<branch>.png
+outputs/metrics/shap/   10_shap_feature_ranking_<model>_<branch>.csv
+                        10_shap_values_<model>_<branch>.csv
+                        10_shap_selected_models.csv
+outputs/figures/shap/   10_shap_bar_<model>_<branch>.png
+                        10_shap_summary_<model>_<branch>.png
 ```
 
 ---
@@ -508,7 +570,7 @@ phm_tool_wear/
 │   ├── data_quality.py             ← inventario, missing, plots calidad
 │   ├── leakage_audit.py            ← checks formales con CSV
 │   ├── shap_analysis.py            ← LinearExplainer/TreeExplainer/fallback
-│   ├── layered_pipeline.py         ← engine arbol (12 ramas)
+│   ├── layered_pipeline.py         ← engine arbol (36 ramas, 3 subsets × 12 etapas)
 │   └── layered_visuals.py          ← flow diagram + dashboard secuencial
 │
 ├── scripts/
@@ -520,7 +582,10 @@ phm_tool_wear/
 │   ├── evaluate_models.py          ← paso 5
 │   ├── run_shap_analysis.py        ← paso 6
 │   ├── run_full_pipeline.py        ← orquestador lineal (corre 0→6)
-│   └── run_layered_pipeline.py     ← orquestador por capas (12 ramas + SHAP)
+│   ├── run_layered_pipeline.py     ← orquestador por capas (36 ramas + SHAP)
+│   ├── eda_signal_fusion.py        ← EDA: correlacion y redundancia A vs R
+│   ├── experiment_baseline_scatter.py  ← scatter VB_real vs pred (baselines LOEO)
+│   └── experiment_signal_branch.py  ← comparacion aislada FUSION/SOLO_A/SOLO_R
 │
 ├── outputs/
 │   ├── splits/                     ← train_test_split.csv, loeo_folds.csv
@@ -621,7 +686,7 @@ best_xgboost_random_tuned.joblib  best_xgboost_grid_tuned.joblib
 | **`figures/layered_pipeline/09_sequential_comparison_dashboard_MAE.png`** | **Dashboard de 4 paneles — la "historia"** |
 | **`figures/layered_pipeline/09_model_evolution_MAE_LOEO.png`** | **Evolucion del MAE al agregar etapas (tuning, augmentation)** |
 | `figures/layered_pipeline/09_best_model_per_branch_MAE.png` | Mejor modelo por cada una de las 12 ramas |
-| `figures/layered_pipeline/09_delta_MAE_vs_baseline_N_ST.png` | ΔMAE de cada rama vs el baseline N_ST |
+| `figures/layered_pipeline/09_delta_MAE_vs_baseline_FUSION_N_ST.png` | ΔMAE de cada rama vs el baseline FUSION_N_ST |
 | `figures/layered_pipeline/09_random_vs_grid_MAE.png` | Random vs Grid lado a lado + delta |
 | `figures/layered_pipeline/09_heatmap_model_vs_branch_MAE.png` | Heatmap modelo × rama (MAE) |
 
@@ -643,39 +708,52 @@ las 6 etapas. Si la linea es plana, la complejidad no ayuda.
 
 | rank | modelo | rama | MAE (µm) | R² |
 |---|---|---|---|---|
-| 1 | **ElasticNet** | A_ST_feature_noise | **26.92** | 0.601 |
-| 2 | ElasticNet | N_ST (baseline) | 26.96 | 0.602 |
-| 3 | ElasticNet | A_ST_grouped_scaling | 27.04 | 0.599 |
-| 4 | ElasticNet | A_ST_feature_scaling | 27.07 | 0.619 |
-| 5 | Lasso | N_CT_random | 27.86 | 0.498 |
-| 6 | Lasso | N_CT_grid | 27.86 | 0.498 |
-| 7 | ElasticNet | N_CT_random | 30.55 | 0.562 |
-| 8 | ElasticNet | N_CT_grid | 30.55 | 0.562 |
-| 9 | ElasticNet | A_CT_random_feature_noise | 30.57 | 0.562 |
-| 10 | ElasticNet | A_CT_grid_feature_noise | 30.57 | 0.562 |
+| 1 | **ElasticNet** | **SOLO_A_N_CT_random** | **18.79** | **0.817** |
+| 2 | ElasticNet | SOLO_A_N_CT_grid | 18.79 | 0.817 |
+| 3 | ElasticNet | SOLO_A_A_ST_feature_noise | 21.24 | 0.772 |
+| 4 | ElasticNet | SOLO_A_N_ST | 21.63 | 0.765 |
+| 5 | ElasticNet | SOLO_A_A_CT_random_feature_scaling | 22.22 | 0.772 |
+| 6 | ElasticNet | SOLO_A_A_CT_grid_feature_scaling | 22.22 | 0.772 |
+| 7 | Ridge | SOLO_A_A_CT_random_grouped_scaling | 22.74 | 0.734 |
+| 8 | Ridge | SOLO_A_A_CT_grid_grouped_scaling | 22.74 | 0.734 |
+| 9 | ElasticNet | SOLO_A_A_CT_random_grouped_scaling | 23.53 | 0.762 |
+| 10 | ElasticNet | SOLO_A_A_CT_grid_grouped_scaling | 23.53 | 0.762 |
 
 ### Lecturas honestas
 
-- **Modelos lineales regularizados dominan**: ElasticNet y Lasso ocupan
-  todos los top-10. Ningun modelo no-lineal aparece arriba.
-- **Tuning empeora** en LOEO por +0.90 µm respecto al baseline. Con 8
-  puntos de entrenamiento, el tuning sobreajusta al CV interior.
-- **Augmentation no aporta**: la mejora es +0.04 µm — irrelevante con
-  n=10. La primera y segunda fila estan a 0.04 µm entre si: **son
-  empates estadisticos**.
-- **Random vs Grid:** convergen al mismo optimo para Lasso (α=0.01),
-  por eso ranks 5-6 y 9-10 son identicos.
-- **SHAP — top feature consistente:** `A_p6_dominant_freq_hz` para
-  ElasticNet, `A_p1_skewness` para XGBoost.
+- **SOLO_A barre el top 10**: ningun branch FUSION ni SOLO_R aparece en
+  las primeras 10 posiciones. Usar solo features axiales es estrictamente
+  mejor que fusionar con rotacionales.
+- **Tuning ayuda esta vez**: ElasticNet en SOLO_A_N_CT_random/grid baja
+  MAE de 21.63 → 18.79 (−2.84 µm). Random y Grid convergen al mismo
+  optimo (empate por construccion).
+- **Augmentation marginal**: el mejor augmented (SOLO_A_A_ST_feature_noise,
+  MAE=21.24) gana al SOLO_A_N_ST (21.63) por solo −0.39 µm. Dentro del
+  margen de empate practico (<1 µm). El tuning sin augmentation es lo
+  que realmente mueve la aguja.
+- **Modelos lineales regularizados dominan**: ElasticNet ocupa 8/10
+  posiciones, Ridge las otras 2. Ningun XGBoost/RF/SVR/MLP en el top 10.
+- **Mejora vs baseline anterior (FUSION_N_ST, MAE=26.96)**: el nuevo
+  ganador SOLO_A_N_CT_random baja a MAE=18.79 → **−30% de error**, y
+  R² sube de 0.60 a 0.82.
 
-### Conclusion del estudio preliminar
+### Mejor configuracion por subset
+
+| Subset | Mejor rama | Modelo | MAE | R² |
+|---|---|---|---|---|
+| **SOLO_A** | SOLO_A_N_CT_random | ElasticNet | **18.79** | **0.817** |
+| FUSION | FUSION_N_CT_random | ElasticNet | ~22 | ~0.74 |
+| SOLO_R | SOLO_R_N_CT_random | ElasticNet | ~25 | ~0.65 |
+
+### Conclusion del estudio preliminar (v2)
 
 > Con 10 experimentos y una sola herramienta, **el mejor estimador
-> honesto del error es MAE ≈ 27 µm con ElasticNet sin tuning**.
-> Cualquier diferencia inferior a ~5 µm entre configuraciones **no es
-> estadisticamente significativa**. Modelos no-lineales, tuning y
-> augmentation no aportan en este regimen de datos. Para mejorar
-> sustancialmente hace falta MAS DATOS, no mas modelos.
+> honesto del error es MAE ≈ 18.8 µm con ElasticNet sobre SOLO_A y
+> tuning**. La bifurcacion por subset de senal fue la mejora mas grande
+> del proyecto: revelar que solo la senal axial es informativa redujo el
+> error 30% sin tocar el modelo. Modelos no-lineales siguen sin aportar
+> en este regimen de datos. Para mejorar sustancialmente desde aqui
+> hace falta MAS DATOS, no mas modelos.
 
 ---
 

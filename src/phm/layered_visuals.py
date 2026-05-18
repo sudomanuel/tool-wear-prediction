@@ -15,17 +15,27 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 from pathlib import Path
 
 from .config import FIGURE_DPI, FIGURE_FORMAT
+from .layered_pipeline import (
+    FEATURE_SUBSETS, AUGMENTATION_STRATEGIES, parse_branch_id,
+)
 
 
 # -----------------------------------------------------------------------------
 # Helpers
 # -----------------------------------------------------------------------------
-BRANCH_ORDER = [
-    'N_ST', 'N_CT_random', 'N_CT_grid',
-    'A_ST_feature_noise', 'A_CT_random_feature_noise', 'A_CT_grid_feature_noise',
-    'A_ST_feature_scaling', 'A_CT_random_feature_scaling', 'A_CT_grid_feature_scaling',
-    'A_ST_grouped_scaling', 'A_CT_random_grouped_scaling', 'A_CT_grid_grouped_scaling',
-]
+def _build_branch_order() -> list:
+    """36 ramas: por cada subset, 12 etapas (N x {ST, random, grid} +
+    A x 3 strategies x 3 tuning)."""
+    stages_per_subset = (
+        ['N_ST', 'N_CT_random', 'N_CT_grid'] +
+        [f'A_ST_{aug}' for aug in AUGMENTATION_STRATEGIES] +
+        [f'A_CT_random_{aug}' for aug in AUGMENTATION_STRATEGIES] +
+        [f'A_CT_grid_{aug}' for aug in AUGMENTATION_STRATEGIES]
+    )
+    return [f'{subset}_{stage}' for subset in FEATURE_SUBSETS for stage in stages_per_subset]
+
+
+BRANCH_ORDER = _build_branch_order()
 
 MODEL_ORDER = ['DummyRegressor', 'Ridge', 'Lasso', 'ElasticNet',
                'SVR', 'RandomForest', 'XGBoost', 'MLP']
@@ -41,9 +51,19 @@ def _save(fig, target_dir: Path, name: str):
 
 
 def _branch_color(bid: str) -> str:
-    if bid.startswith('N_'):
-        return '#7CA9C8'   # azul claro
-    return '#D7906A'       # naranja
+    """Color por (subset, data_branch). 6 colores: 3 subsets x {N, A}."""
+    meta = parse_branch_id(bid)
+    subset = meta.get('feature_subset', '')
+    is_aug = meta.get('data_branch') == 'A'
+    palette = {
+        ('FUSION', False): '#7CA9C8',  # azul claro
+        ('FUSION', True):  '#1F4E79',  # azul oscuro
+        ('SOLO_A', False): '#E4AA88',  # naranja claro
+        ('SOLO_A', True):  '#A0521E',  # naranja oscuro
+        ('SOLO_R', False): '#8FCDB1',  # verde claro
+        ('SOLO_R', True):  '#1B7F5A',  # verde oscuro
+    }
+    return palette.get((subset, is_aug), '#9E9E9E')
 
 
 def _clip_high(values, lower_is_better=True, k=6.0):

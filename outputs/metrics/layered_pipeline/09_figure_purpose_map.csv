@@ -7,8 +7,8 @@ outputs/figures/layered_pipeline/09_branch_performance_MAPE.png,¿Cual rama tien
 outputs/figures/layered_pipeline/09_best_model_per_branch_MAE.png,¿Que modelo gana en cada rama?,MAE,Cada barra muestra rama → mejor modelo (con MAE).,True
 outputs/figures/layered_pipeline/09_heatmap_model_vs_branch_MAE.png,¿Que modelos son consistentemente buenos?,MAE,Verde oscuro = bajo MAE. Lee verticalmente por modelo.,True
 outputs/figures/layered_pipeline/09_heatmap_model_vs_branch_R2.png,¿Que modelos generalizan mejor?,R²,Amarillo = R² alto. Negro = R² negativo.,False
-outputs/figures/layered_pipeline/09_delta_MAE_vs_baseline_N_ST.png,¿Tuning o augmentation mejoran al baseline?,MAE,Δ<0 = mejora; |Δ|<1 = empate practico; Δ>0 = empeora.,True
-outputs/figures/layered_pipeline/09_delta_RMSE_vs_baseline_N_ST.png,¿Idem MAE para RMSE?,RMSE,Misma lectura que delta MAE.,False
+outputs/figures/layered_pipeline/09_delta_MAE_vs_baseline_FUSION_N_ST.png,¿Tuning o augmentation mejoran al baseline?,MAE,Δ<0 = mejora; |Δ|<1 = empate practico; Δ>0 = empeora.,True
+outputs/figures/layered_pipeline/09_delta_RMSE_vs_baseline_FUSION_N_ST.png,¿Idem MAE para RMSE?,RMSE,Misma lectura que delta MAE.,False
 outputs/figures/layered_pipeline/09_tuning_effect_MAE.png,¿Ayuda el tuning?,MAE,"Tres barras: ST/Random/Grid. Si Random ≈ Grid, Grid no aporta.",True
 outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png,¿Ayuda el tuning (RMSE)?,RMSE,Idem MAE.,False
 outputs/figures/layered_pipeline/09_random_vs_grid_MAE.png,¿Aporta GridSearch sobre RandomizedSearch?,MAE,Panel derecho: |Δ|<1 = empate practico.,True

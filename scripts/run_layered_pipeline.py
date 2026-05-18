@@ -100,7 +100,8 @@ from phm.layered_pipeline import (
     build_random_vs_grid_summary,
     build_model_evolution_summary, build_model_evolution_by_model,
     select_predictions_for_multi_overlay,
-    NONLINEAR_NAMES,
+    NONLINEAR_NAMES, FEATURE_SUBSETS, get_features_for_subset,
+    AUGMENTATION_STRATEGIES, parse_branch_id,
 )
 from phm.layered_visuals import (
     plot_layered_flow_diagram, plot_branch_performance,
@@ -391,13 +392,28 @@ STAGE_PREFIX = {
 
 
 def _stage_prefix_for_branch(bid: str) -> str:
-    """N_ST → 03; N_CT_random → 04; A_ST_feature_noise → 06; etc."""
-    if bid.startswith('N_ST'):           return '03'
-    if bid.startswith('N_CT_random'):    return '04'
-    if bid.startswith('N_CT_grid'):      return '05'
-    if bid.startswith('A_ST'):           return '06'
-    if bid.startswith('A_CT_random'):    return '07'
-    if bid.startswith('A_CT_grid'):      return '08'
+    """
+    Mapea branch_id -> prefijo de etapa (03..08), independiente del subset.
+    Ejemplos:
+      FUSION_N_ST                          -> 03
+      SOLO_A_N_CT_random                   -> 04
+      SOLO_R_A_CT_grid_feature_noise       -> 08
+    El subset (FUSION/SOLO_A/SOLO_R) no cambia el prefijo de etapa porque
+    los CSVs se diferencian por el branch_id completo dentro del nombre.
+    """
+    # Quitar el prefijo de subset
+    rest = bid
+    for s in FEATURE_SUBSETS:
+        pref = f'{s}_'
+        if bid.startswith(pref):
+            rest = bid[len(pref):]
+            break
+    if rest.startswith('N_ST'):           return '03'
+    if rest.startswith('N_CT_random'):    return '04'
+    if rest.startswith('N_CT_grid'):      return '05'
+    if rest.startswith('A_ST'):           return '06'
+    if rest.startswith('A_CT_random'):    return '07'
+    if rest.startswith('A_CT_grid'):      return '08'
     return '09'
 
 
@@ -411,14 +427,18 @@ def step_run_all_branches(df: pd.DataFrame, feat_cols: list) -> dict:
 
     for spec in branches:
         bid = spec['branch_id']
+        subset = spec['feature_subset']
+        # Filtrar features segun subset (FUSION/SOLO_A/SOLO_R)
+        feat_cols_subset = get_features_for_subset(feat_cols, subset)
         t0 = time.time()
         try:
             res = run_branch(
                 branch_id=bid,
+                feature_subset=subset,
                 data_branch=spec['data_branch'],
                 tuning_method=spec['tuning_method'],
                 aug_strategy=spec['aug_strategy'],
-                full_df=df, feat_cols=feat_cols,
+                full_df=df, feat_cols=feat_cols_subset,
             )
             status = 'OK'; notes = ''
             all_metrics.extend(res['metrics_rows'])
@@ -437,6 +457,8 @@ def step_run_all_branches(df: pd.DataFrame, feat_cols: list) -> dict:
 
         summary_rows.append({
             'branch_id': bid,
+            'feature_subset': subset,
+            'n_features': len(feat_cols_subset),
             'data_branch': spec['data_branch'],
             'tuning_branch': 'ST' if spec['tuning_method'] == 'none' else 'CT',
             'tuning_method': spec['tuning_method'],
@@ -473,7 +495,7 @@ def step_run_all_branches(df: pd.DataFrame, feat_cols: list) -> dict:
 def step_ranking_and_summaries(df_metrics: pd.DataFrame) -> dict:
     rank      = build_final_ranking(df_metrics)
     best_brch = build_branch_best_summary(df_metrics)
-    delta_df  = build_delta_vs_baseline(df_metrics, baseline_branch='N_ST')
+    delta_df  = build_delta_vs_baseline(df_metrics, baseline_branch='FUSION_N_ST')
     tun_df    = build_tuning_effect_summary(df_metrics)
     aug_df    = build_augmentation_effect_summary(df_metrics)
     rg_df     = build_random_vs_grid_summary(df_metrics)
@@ -540,7 +562,7 @@ def step_figures(df_metrics: pd.DataFrame, df_predictions: pd.DataFrame,
     for metric in ('MAE', 'RMSE'):
         paths.append(plot_delta_vs_baseline(
             LAYER_FIGURES_DIR, sums['delta'], metric,
-            filename=f'09_delta_{metric}_vs_baseline_N_ST'))
+            filename=f'09_delta_{metric}_vs_baseline_FUSION_N_ST'))
 
     # 09 — tuning effect
     for metric in ('MAE', 'RMSE'):
@@ -691,8 +713,6 @@ def step_shap(df: pd.DataFrame, feat_cols: list,
     df_real = df.copy()
     if 'is_augmented' in df_real.columns:
         df_real = df_real[df_real['is_augmented'] == False].reset_index(drop=True)
-    X_full_real    = df_real[feat_cols].values.astype(float)
-    X_explain_real = X_full_real  # explicamos los 10 experimentos reales
     eids_explain   = df_real[EXPERIMENT_ID_COL].astype(int).tolist()
 
     sel_rows = []
@@ -701,15 +721,20 @@ def step_shap(df: pd.DataFrame, feat_cols: list,
     for t in targets:
         name, bid, est = t['model_name'], t['branch_id'], t['estimator']
         tag = f"{name}_{bid}"
-        print(f"\n[SHAP] {tag}  ({t['reason']})")
+        # CRITICAL: cada rama tiene su propio subset de features. El estimador
+        # esta entrenado con feat_cols filtradas; SHAP debe usar las mismas.
+        subset = parse_branch_id(bid).get('feature_subset') or 'FUSION'
+        feat_cols_branch = get_features_for_subset(feat_cols, subset)
+        X_real_branch    = df_real[feat_cols_branch].values.astype(float)
+        print(f"\n[SHAP] {tag}  ({t['reason']}, subset={subset}, n_feats={len(feat_cols_branch)})")
         note = ''
         try:
             res = explain_model(
                 model_name=tag,
                 pipeline=est,
-                X_train_real=X_full_real,
-                X_explain_real=X_explain_real,
-                feature_names=feat_cols,
+                X_train_real=X_real_branch,
+                X_explain_real=X_real_branch,
+                feature_names=feat_cols_branch,
                 explain_experiment_ids=eids_explain,
                 top_n=20,
                 file_prefix='10_',
@@ -748,25 +773,22 @@ def step_manifest(figure_paths: list, shap_explained: list) -> None:
     rows = []
 
     def _meta_from_filename(name: str) -> dict:
-        meta = {'branch_id': '', 'data_branch': '',
+        meta = {'branch_id': '', 'feature_subset': '', 'data_branch': '',
                 'tuning_method': '', 'augmentation_strategy': '',
                 'validation_method': 'loeo'}
+        # Generamos dinamicamente la lista de 36 branch_ids a buscar.
+        candidates = [b['branch_id'] for b in enumerate_branches()]
+        # Mas especificos primero (mas largos), para evitar matches parciales.
+        candidates.sort(key=len, reverse=True)
         name_l = name.lower()
-        for bid in [
-            'n_st', 'n_ct_random', 'n_ct_grid',
-            'a_st_feature_noise', 'a_ct_random_feature_noise', 'a_ct_grid_feature_noise',
-            'a_st_feature_scaling', 'a_ct_random_feature_scaling', 'a_ct_grid_feature_scaling',
-            'a_st_grouped_scaling', 'a_ct_random_grouped_scaling', 'a_ct_grid_grouped_scaling',
-        ]:
-            if bid in name_l:
-                meta['branch_id'] = bid.upper()
-                meta['data_branch'] = 'A' if bid.startswith('a') else 'N'
-                if 'ct_random' in bid:    meta['tuning_method'] = 'random'
-                elif 'ct_grid' in bid:    meta['tuning_method'] = 'grid'
-                else:                      meta['tuning_method'] = 'none'
-                if 'feature_noise' in bid:    meta['augmentation_strategy'] = 'feature_noise'
-                elif 'feature_scaling' in bid: meta['augmentation_strategy'] = 'feature_scaling'
-                elif 'grouped_scaling' in bid: meta['augmentation_strategy'] = 'grouped_scaling'
+        for bid in candidates:
+            if bid.lower() in name_l:
+                parsed = parse_branch_id(bid)
+                meta['branch_id'] = bid
+                meta['feature_subset'] = parsed['feature_subset']
+                meta['data_branch']    = parsed['data_branch']
+                meta['tuning_method']  = parsed['tuning_method']
+                meta['augmentation_strategy'] = parsed['aug_strategy']
                 break
         return meta
 

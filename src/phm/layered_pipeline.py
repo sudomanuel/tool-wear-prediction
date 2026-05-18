@@ -58,6 +58,29 @@ AUGMENTATION_STRATEGIES = ['feature_noise', 'feature_scaling', 'grouped_scaling'
 TUNABLE_MODELS = ['Ridge', 'Lasso', 'ElasticNet', 'SVR', 'RandomForest', 'XGBoost']
 NONLINEAR_NAMES = {'svr', 'randomforest', 'xgboost', 'mlp'}
 
+# Bifurcacion por tipo de senal (FUSION/SOLO_A/SOLO_R).
+# FUSION  : todas las features (axial + rotacional + cruzadas)
+# SOLO_A  : solo features que empiezan con "A_" (axial)
+# SOLO_R  : solo features que empiezan con "R_" (rotacional)
+FEATURE_SUBSETS = ['FUSION', 'SOLO_A', 'SOLO_R']
+
+
+def get_features_for_subset(feat_cols: List[str], subset: str) -> List[str]:
+    """Filtra `feat_cols` segun el subset de senal.
+
+    FUSION  -> todas las features
+    SOLO_A  -> solo columnas que empiezan con 'A_'
+    SOLO_R  -> solo columnas que empiezan con 'R_'
+    """
+    if subset == 'FUSION':
+        return list(feat_cols)
+    if subset == 'SOLO_A':
+        return [c for c in feat_cols if c.startswith('A_')]
+    if subset == 'SOLO_R':
+        return [c for c in feat_cols if c.startswith('R_')]
+    raise ValueError(f"feature_subset desconocido: {subset!r}. "
+                     f"Esperado uno de {FEATURE_SUBSETS}")
+
 
 def all_baseline_builders() -> Dict[str, callable]:
     """Devuelve dict {nombre: builder()} — un constructor por modelo."""
@@ -214,18 +237,25 @@ def run_branch(branch_id: str,
                aug_strategy: str,
                full_df: pd.DataFrame,
                feat_cols: List[str],
-               models_filter: Optional[List[str]] = None
+               models_filter: Optional[List[str]] = None,
+               feature_subset: str = 'FUSION',
                ) -> Dict:
     """
     Ejecuta una rama:
       1. Tuning (si CT) via GroupKFold sobre TODOS los datos.
       2. LOEO-CV con esos params refitteados en cada fold.
 
+    `feature_subset` (FUSION/SOLO_A/SOLO_R) es informativo y se registra en
+    metrics y predictions. El filtrado real de columnas debe hacerse antes
+    (ver get_features_for_subset).
+
     Devuelve dict con metrics_rows, predictions_rows, tuning_rows y
     best_estimators_full (cada modelo entrenado en el dataset completo,
     util para SHAP).
     """
-    print(f"\n>>> branch {branch_id}  (data={data_branch}, tuning={tuning_method}, aug={aug_strategy})")
+    print(f"\n>>> branch {branch_id}  "
+          f"(subset={feature_subset}, data={data_branch}, "
+          f"tuning={tuning_method}, aug={aug_strategy}, n_feats={len(feat_cols)})")
     t0 = time.time()
 
     seed = RANDOM_SEED
@@ -266,10 +296,12 @@ def run_branch(branch_id: str,
         best_params_per_model[name] = best_params
         tuning_rows.append({
             'model': name,
+            'feature_subset': feature_subset,
             'data_branch': data_branch,
             'tuning_method': tuning_method if name in TUNABLE_MODELS else 'none',
             'augmentation_strategy': aug_strategy,
             'branch_id': branch_id,
+            'n_features': len(feat_cols),
             'best_params': json.dumps({k: _safe(v) for k, v in best_params.items()}),
             'best_cv_score_mae': cv_mae,
             'scoring': 'neg_mean_absolute_error',
@@ -328,12 +360,14 @@ def run_branch(branch_id: str,
         n_train_typ = int(np.median(loeo_n_train[name])) if loeo_n_train[name] else 0
         metrics_rows.append({
             'model': name,
+            'feature_subset': feature_subset,
             'data_branch': data_branch,
             'tuning_branch': 'CT' if tuning_method != 'none' else 'ST',
             'tuning_method': tuning_method if name in TUNABLE_MODELS else 'none',
             'validation_type': 'loeo',
             'augmentation_strategy': aug_strategy,
             'branch_id': branch_id,
+            'n_features': len(feat_cols),
             **mets,
             'n_train': n_train_typ,
             'n_train_original': (len(full_df) - 1),
@@ -344,6 +378,7 @@ def run_branch(branch_id: str,
         })
         pdf = make_predictions_df(name, loeo_eids[name], yt, yp,
                                   extra={
+                                      'feature_subset': feature_subset,
                                       'data_branch': data_branch,
                                       'tuning_method': tuning_method if name in TUNABLE_MODELS else 'none',
                                       'validation_type': 'loeo',
@@ -388,26 +423,84 @@ def run_branch(branch_id: str,
 # Plan de ramas
 # =============================================================================
 def enumerate_branches() -> List[dict]:
-    """Devuelve las 12 ramas: N x {ST, CT_random, CT_grid} +
-       A x {ST, CT_random, CT_grid} x {3 estrategias}."""
+    """Devuelve las 36 ramas: 3 feature_subsets x (N x {ST, CT_random, CT_grid}
+    + A x {ST, CT_random, CT_grid} x {3 estrategias de augmentation}).
+
+    Formato del branch_id: '{SUBSET}_{N|A}_{ST|CT_*}[_{aug_strategy}]'
+    Ejemplos:
+        FUSION_N_ST
+        FUSION_A_CT_grid_feature_noise
+        SOLO_A_N_CT_random
+        SOLO_R_A_ST_grouped_scaling
+    """
     out = []
-    for tm in ('none', 'random', 'grid'):
-        suffix = 'ST' if tm == 'none' else f'CT_{tm}'
-        out.append({
-            'branch_id': f'N_{suffix}',
-            'data_branch': 'N',
-            'tuning_method': tm,
-            'aug_strategy': 'none',
-        })
-    for aug in AUGMENTATION_STRATEGIES:
+    for subset in FEATURE_SUBSETS:
         for tm in ('none', 'random', 'grid'):
             suffix = 'ST' if tm == 'none' else f'CT_{tm}'
             out.append({
-                'branch_id': f'A_{suffix}_{aug}',
-                'data_branch': 'A',
+                'branch_id': f'{subset}_N_{suffix}',
+                'feature_subset': subset,
+                'data_branch': 'N',
                 'tuning_method': tm,
-                'aug_strategy': aug,
+                'aug_strategy': 'none',
             })
+        for aug in AUGMENTATION_STRATEGIES:
+            for tm in ('none', 'random', 'grid'):
+                suffix = 'ST' if tm == 'none' else f'CT_{tm}'
+                out.append({
+                    'branch_id': f'{subset}_A_{suffix}_{aug}',
+                    'feature_subset': subset,
+                    'data_branch': 'A',
+                    'tuning_method': tm,
+                    'aug_strategy': aug,
+                })
+    return out
+
+
+def parse_branch_id(branch_id: str) -> dict:
+    """Inverso de enumerate_branches: extrae (subset, data, tuning, aug)
+    de un branch_id. Util para parsear desde nombres de archivo y para
+    visualizaciones.
+
+    Devuelve dict con claves: feature_subset, data_branch, tuning_method,
+    aug_strategy. Si no se reconoce, devuelve dict con valores vacios.
+    """
+    out = {'feature_subset': '', 'data_branch': '',
+           'tuning_method': '', 'aug_strategy': 'none'}
+    bid = branch_id.upper() if branch_id else ''
+    # subset (orden importa: SOLO_A y SOLO_R antes que FUSION solo por consistencia)
+    for s in FEATURE_SUBSETS:
+        if bid.startswith(s + '_'):
+            out['feature_subset'] = s
+            rest = bid[len(s) + 1:]
+            break
+    else:
+        return out
+    # data branch: 'N_*' o 'A_*'
+    if rest.startswith('N_'):
+        out['data_branch'] = 'N'
+        rest = rest[2:]
+    elif rest.startswith('A_'):
+        out['data_branch'] = 'A'
+        rest = rest[2:]
+    # tuning + aug
+    if rest.startswith('ST'):
+        out['tuning_method'] = 'none'
+        tail = rest[2:].lstrip('_')
+    elif rest.startswith('CT_RANDOM'):
+        out['tuning_method'] = 'random'
+        tail = rest[len('CT_RANDOM'):].lstrip('_')
+    elif rest.startswith('CT_GRID'):
+        out['tuning_method'] = 'grid'
+        tail = rest[len('CT_GRID'):].lstrip('_')
+    else:
+        tail = ''
+    # aug_strategy
+    if tail:
+        for aug in AUGMENTATION_STRATEGIES:
+            if tail.upper() == aug.upper():
+                out['aug_strategy'] = aug
+                break
     return out
 
 
@@ -454,7 +547,7 @@ def build_branch_best_summary(metrics_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_delta_vs_baseline(metrics_df: pd.DataFrame,
-                            baseline_branch: str = 'N_ST') -> pd.DataFrame:
+                            baseline_branch: str = 'FUSION_N_ST') -> pd.DataFrame:
     """delta_MAE = best_MAE_branch - best_MAE_baseline (negativo = mejora)."""
     best = build_branch_best_summary(metrics_df)
     if best.empty or baseline_branch not in best['branch_id'].values:
@@ -551,34 +644,67 @@ def build_random_vs_grid_summary(metrics_df: pd.DataFrame) -> pd.DataFrame:
 
 
 # =============================================================================
-# Evolucion del modelo: 12 ramas en orden, rama por rama
+# Evolucion del modelo: progresion de ramas (3 subsets x 12 etapas = 36)
 # =============================================================================
-# Orden visual de las 12 ramas. Agrupa por "familia" para que se lea
-# como una progresion: primero N (sin/con tuning), luego A_ST por
-# estrategia, luego A_CT_random por estrategia, luego A_CT_grid.
-BRANCH_PROGRESSION = [
-    # (stage_order, branch_id, family, short_label)
-    (1,  'N_ST',                          'N',           '1. N_ST'),
-    (2,  'N_CT_random',                   'N · tuning',  '2. N_CT_random'),
-    (3,  'N_CT_grid',                     'N · tuning',  '3. N_CT_grid'),
-    (4,  'A_ST_feature_noise',            'A · ST',      '4. A_ST_fnoise'),
-    (5,  'A_ST_feature_scaling',          'A · ST',      '5. A_ST_fscale'),
-    (6,  'A_ST_grouped_scaling',          'A · ST',      '6. A_ST_gscale'),
-    (7,  'A_CT_random_feature_noise',     'A · random',  '7. A_CTr_fnoise'),
-    (8,  'A_CT_random_feature_scaling',   'A · random',  '8. A_CTr_fscale'),
-    (9,  'A_CT_random_grouped_scaling',   'A · random',  '9. A_CTr_gscale'),
-    (10, 'A_CT_grid_feature_noise',       'A · grid',    '10. A_CTg_fnoise'),
-    (11, 'A_CT_grid_feature_scaling',     'A · grid',    '11. A_CTg_fscale'),
-    (12, 'A_CT_grid_grouped_scaling',     'A · grid',    '12. A_CTg_gscale'),
+# Orden visual: dentro de cada subset, primero N (sin/con tuning), luego
+# A_ST por estrategia, luego A_CT_random por estrategia, luego A_CT_grid.
+# Entre subsets: FUSION -> SOLO_A -> SOLO_R.
+
+# Esqueleto compartido (12 etapas dentro de un subset)
+_BRANCH_STAGES_PER_SUBSET = [
+    # (sub_order, bid_suffix, family_suffix, short_label_suffix)
+    (1,  'N_ST',                          'N',           'N_ST'),
+    (2,  'N_CT_random',                   'N·tuning',    'N_CT_random'),
+    (3,  'N_CT_grid',                     'N·tuning',    'N_CT_grid'),
+    (4,  'A_ST_feature_noise',            'A·ST',        'A_ST_fnoise'),
+    (5,  'A_ST_feature_scaling',          'A·ST',        'A_ST_fscale'),
+    (6,  'A_ST_grouped_scaling',          'A·ST',        'A_ST_gscale'),
+    (7,  'A_CT_random_feature_noise',     'A·random',    'A_CTr_fnoise'),
+    (8,  'A_CT_random_feature_scaling',   'A·random',    'A_CTr_fscale'),
+    (9,  'A_CT_random_grouped_scaling',   'A·random',    'A_CTr_gscale'),
+    (10, 'A_CT_grid_feature_noise',       'A·grid',      'A_CTg_fnoise'),
+    (11, 'A_CT_grid_feature_scaling',     'A·grid',      'A_CTg_fscale'),
+    (12, 'A_CT_grid_grouped_scaling',     'A·grid',      'A_CTg_gscale'),
 ]
 
-FAMILY_COLORS = {
-    'N':          '#1F4E79',
-    'N · tuning': '#2E86AB',
-    'A · ST':     '#D7906A',
-    'A · random': '#A0521E',
-    'A · grid':   '#7B2D26',
+
+def _build_branch_progression() -> list:
+    """Genera dinamicamente la progresion: 3 subsets x 12 etapas = 36."""
+    rows = []
+    order = 0
+    for subset in FEATURE_SUBSETS:
+        for sub_order, suffix, fam_suffix, short in _BRANCH_STAGES_PER_SUBSET:
+            order += 1
+            bid = f'{subset}_{suffix}'
+            family = f'{subset}·{fam_suffix}'
+            short_label = f'{order}. {subset[:3]}|{short}'  # ej: '1. FUS|N_ST'
+            rows.append((order, bid, family, short_label))
+    return rows
+
+
+BRANCH_PROGRESSION = _build_branch_progression()
+
+
+# Paleta por subset (3 familias de colores)
+_SUBSET_BASE_COLORS = {
+    'FUSION': {'N': '#1F4E79', 'N·tuning': '#2E86AB',
+               'A·ST':  '#5BA3D0', 'A·random': '#7BB4DA', 'A·grid': '#9CC7E5'},
+    'SOLO_A': {'N': '#7B2D26', 'N·tuning': '#A0521E',
+               'A·ST':  '#D7906A', 'A·random': '#E4AA88', 'A·grid': '#F1C4A8'},
+    'SOLO_R': {'N': '#1B7F5A', 'N·tuning': '#3B9B73',
+               'A·ST':  '#5DB892', 'A·random': '#82CCAE', 'A·grid': '#A8DFC9'},
 }
+
+
+def _build_family_colors() -> dict:
+    out = {}
+    for subset, fams in _SUBSET_BASE_COLORS.items():
+        for fam_suffix, color in fams.items():
+            out[f'{subset}·{fam_suffix}'] = color
+    return out
+
+
+FAMILY_COLORS = _build_family_colors()
 
 
 def _interpret_delta(d: float, eps_tie: float = 1.0, eps_marg: float = 5.0,
@@ -675,7 +801,7 @@ def build_model_evolution_by_model(metrics_df: pd.DataFrame,
     if df.empty:
         return pd.DataFrame()
 
-    baseline = df[df['branch_id'] == 'N_ST'].sort_values('MAE')
+    baseline = df[df['branch_id'] == 'FUSION_N_ST'].sort_values('MAE')
     if baseline.empty:
         return pd.DataFrame()
     top_models = baseline['model'].head(top_n_models).tolist()
@@ -708,12 +834,13 @@ def select_predictions_for_multi_overlay(predictions_df: pd.DataFrame,
                                          rank_df: pd.DataFrame
                                          ) -> list:
     """
-    Selecciona 5 configuraciones representativas para el scatter overlay:
-      1. baseline           = mejor modelo en N_ST
-      2. mejor tuneado N    = mejor (modelo, rama) entre N_CT_*
-      3. mejor A_ST         = mejor entre A_ST_*
-      4. mejor A + tuneado  = mejor entre A_CT_*
-      5. best global        = top 1 del ranking
+    Selecciona 5 configuraciones representativas para el scatter overlay,
+    comparando los 3 subsets de senal:
+      1. baseline FUSION      = mejor modelo en FUSION_N_ST
+      2. mejor FUSION global  = mejor (modelo, rama) entre FUSION_*
+      3. mejor SOLO_A global  = mejor entre SOLO_A_*
+      4. mejor SOLO_R global  = mejor entre SOLO_R_*
+      5. best global          = top 1 del ranking
     Devuelve lista de dicts con {label, model, branch_id, color, y_real, y_pred, eids}.
     """
     if predictions_df.empty or rank_df.empty:
@@ -744,13 +871,13 @@ def select_predictions_for_multi_overlay(predictions_df: pd.DataFrame,
         }
 
     selections = []
-    s1 = _pick('N_ST', '1. Baseline (N_ST)', '#1F4E79')
-    s2 = _pick(lambda b: b in ('N_CT_random', 'N_CT_grid'),
-               '2. Mejor tuneado (N_CT)', '#2E86AB')
-    s3 = _pick(lambda b: b.startswith('A_ST_'),
-               '3. Mejor A_ST', '#D7906A')
-    s4 = _pick(lambda b: b.startswith('A_CT_'),
-               '4. Mejor A_CT (aug+tuning)', '#A0521E')
+    s1 = _pick('FUSION_N_ST', '1. Baseline (FUSION_N_ST)', '#1F4E79')
+    s2 = _pick(lambda b: b.startswith('FUSION_'),
+               '2. Best FUSION', '#2E86AB')
+    s3 = _pick(lambda b: b.startswith('SOLO_A_'),
+               '3. Best SOLO_A', '#D7906A')
+    s4 = _pick(lambda b: b.startswith('SOLO_R_'),
+               '4. Best SOLO_R', '#1B7F5A')
     s5 = _pick(lambda b: True,
                '5. BEST GLOBAL', '#D7263D')
     for s in (s1, s2, s3, s4, s5):
