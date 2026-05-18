@@ -1,5 +1,5 @@
 data_branch,augmentation_strategy,best_MAE_grid,best_MAE_random,delta_grid_minus_random,winner
-A,feature_noise,26.864211235969332,26.864211235969332,0.0,practical_tie (<1 µm)
-A,feature_scaling,22.220470106637343,22.220470106637343,0.0,practical_tie (<1 µm)
+A,feature_noise,26.864211235969503,26.864211235969503,0.0,practical_tie (<1 µm)
+A,feature_scaling,22.22047010663722,22.22047010663722,0.0,practical_tie (<1 µm)
 A,grouped_scaling,22.739947537205484,22.739947537205484,0.0,practical_tie (<1 µm)
-N,none,18.789539381237695,18.789539381237695,0.0,practical_tie (<1 µm)
+N,none,18.78953938123773,18.78953938123773,0.0,practical_tie (<1 µm)

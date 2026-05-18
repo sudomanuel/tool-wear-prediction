@@ -302,13 +302,14 @@ def plot_heatmap_model_vs_branch(target_dir: Path, metrics_df: pd.DataFrame,
     df = metrics_df[metrics_df['validation_type'] == 'loeo'].copy()
     if df.empty or metric not in df.columns:
         return None
-    pivot = df.pivot_table(index='model', columns='branch_id',
+    # Pivot con ramas como filas (mejor para muchas ramas: 36) y modelos como cols (8)
+    pivot = df.pivot_table(index='branch_id', columns='model',
                            values=metric, aggfunc='min')
-    # Ordenar filas y columnas
-    row_order = [m for m in MODEL_ORDER if m in pivot.index] + \
-                [m for m in pivot.index if m not in MODEL_ORDER]
-    col_order = [b for b in BRANCH_ORDER if b in pivot.columns] + \
-                [b for b in pivot.columns if b not in BRANCH_ORDER]
+    # Ordenar filas (branches) y columnas (models)
+    row_order = [b for b in BRANCH_ORDER if b in pivot.index] + \
+                [b for b in pivot.index if b not in BRANCH_ORDER]
+    col_order = [m for m in MODEL_ORDER if m in pivot.columns] + \
+                [m for m in pivot.columns if m not in MODEL_ORDER]
     pivot = pivot.reindex(index=row_order, columns=col_order)
 
     # Clipping para escala visual (no afecta texto)
@@ -317,15 +318,17 @@ def plot_heatmap_model_vs_branch(target_dir: Path, metrics_df: pd.DataFrame,
     vmax = float(np.percentile(vals_flat, 90)) if len(vals_flat) > 0 else None
     vmin = float(np.nanmin(pivot.values)) if np.isfinite(pivot.values).any() else None
 
-    fig, ax = plt.subplots(figsize=(0.85 * len(col_order) + 3.5,
-                                     0.55 * len(row_order) + 2.5))
+    # Tamaño calculado: branches verticales (~36) caben mucho mejor en alto
+    fig_h = max(8.0, 0.32 * len(row_order) + 2.5)
+    fig_w = max(8.5, 0.95 * len(col_order) + 3.8)
+    fig, ax = plt.subplots(figsize=(fig_w, fig_h))
     cmap = 'viridis_r' if lower_is_better else 'viridis'
     im = ax.imshow(pivot.values, cmap=cmap, aspect='auto',
                    vmin=vmin, vmax=vmax)
     ax.set_xticks(np.arange(len(col_order)))
-    ax.set_xticklabels(col_order, rotation=35, ha='right', fontsize=8)
+    ax.set_xticklabels(col_order, rotation=30, ha='right', fontsize=10)
     ax.set_yticks(np.arange(len(row_order)))
-    ax.set_yticklabels(row_order, fontsize=9)
+    ax.set_yticklabels(row_order, fontsize=8)
 
     # Anotar valores
     for i in range(pivot.shape[0]):
@@ -342,7 +345,8 @@ def plot_heatmap_model_vs_branch(target_dir: Path, metrics_df: pd.DataFrame,
     cbar = plt.colorbar(im, ax=ax, fraction=0.025, pad=0.02)
     cbar.set_label(f'{metric}  ' +
                     ('(menor mejor)' if lower_is_better else '(mayor mejor)'))
-    ax.set_title(f'Heatmap modelo × rama — {metric} LOEO-CV', fontsize=11, pad=10)
+    ax.set_title(f'Heatmap rama × modelo — {metric} LOEO-CV  ({len(row_order)} ramas × {len(col_order)} modelos)',
+                 fontsize=12, pad=10)
     fig.tight_layout()
     return _save(fig, target_dir, filename or f'09_heatmap_model_vs_branch_{metric}')
 
@@ -603,7 +607,8 @@ def plot_sequential_dashboard(target_dir: Path,
       3. Tuning effect (ST/Random/Grid)
       4. Augmentation effect (N + 3 strategies)
     """
-    fig, axes = plt.subplots(2, 2, figsize=(15, 11))
+    # Más alto para que las ~36 ramas en barh sean legibles
+    fig, axes = plt.subplots(2, 2, figsize=(18, 16))
 
     # Panel 1: best metric por rama
     ax = axes[0, 0]
@@ -617,8 +622,9 @@ def plot_sequential_dashboard(target_dir: Path,
         colors[best_idx] = '#2E86AB'
         ax.barh(sub['branch_id'][::-1], sub[metric][::-1],
                 color=colors[::-1], edgecolor='k', linewidth=0.3)
-        ax.set_title(f'1. Best {metric} por rama (LOEO)', fontsize=11)
+        ax.set_title(f'1. Best {metric} por rama (LOEO)', fontsize=12)
         ax.set_xlabel(metric)
+        ax.tick_params(axis='y', labelsize=8)
         ax.grid(True, axis='x', alpha=0.3)
         clip = _clip_high(sub[metric].values, True)
         if clip is not None:
@@ -640,8 +646,10 @@ def plot_sequential_dashboard(target_dir: Path,
         ax.barh(sub['branch_id'][::-1], sub[col][::-1],
                 color=colors[::-1], edgecolor='k', linewidth=0.3)
         ax.axvline(0, color='black', linewidth=0.8)
-        ax.set_title(f'2. Δ {metric} vs baseline N_ST', fontsize=11)
+        baseline_branch = sub['baseline_branch'].iloc[0] if 'baseline_branch' in sub.columns else 'N_ST'
+        ax.set_title(f'2. Δ {metric} vs baseline {baseline_branch}', fontsize=12)
         ax.set_xlabel(f'Δ {metric}')
+        ax.tick_params(axis='y', labelsize=8)
         ax.grid(True, axis='x', alpha=0.3)
     else:
         ax.text(0.5, 0.5, '(sin filas)', ha='center', va='center')
@@ -830,8 +838,9 @@ def plot_model_evolution(target_dir: Path,
     ax.set_xticklabels(df['short_label'], rotation=35, ha='right', fontsize=8)
     direction = '(menor = mejor)' if lower_is_better else '(mayor = mejor)'
     ax.set_ylabel(f'{metric}  {direction}', fontsize=10)
+    n_ramas = len(df)
     ax.set_title(
-        f'Evolucion del modelo rama por rama  —  {metric} (LOEO-CV, las 12 ramas)\n'
+        f'Evolucion del modelo rama por rama  —  {metric} (LOEO-CV, las {n_ramas} ramas)\n'
         f'Bandas: familia de configuracion  ·  diamante azul: ganador de la rama  ·  estrella dorada: best overall',
         fontsize=11, pad=20)
     ax.grid(True, alpha=0.3, axis='y')

@@ -42,7 +42,7 @@ RED_BAD = RGBColor(0xB0, 0x32, 0x4A)
 
 BASE = Path(__file__).parent.parent
 FIG = BASE / 'outputs' / 'figures'
-OUT_PPTX = BASE / 'outputs' / 'reports' / 'tool_wear_pipeline_story.pptx'
+OUT_PPTX = BASE / 'outputs' / 'reports' / 'tool_wear_pipeline_Manuel_Pusma.pptx'
 OUT_PPTX.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -192,12 +192,12 @@ add_text(s, 'LOEO-CV  ·  10 folds  ·  honest', 1.0, 5.7, 4.0, 0.4,
 add_rect(s, 5.8, 4.5, 4.5, 1.5, NAVY_DARK)
 add_text(s, 'Best model', 6.0, 4.65, 4.0, 0.4, size=11,
          color=hexc(0xCB, 0xD5, 0xE1), bold=True)
-add_text(s, 'ElasticNet  →  MAE = 26.92 µm', 6.0, 4.95, 4.0, 0.5,
+add_text(s, 'ElasticNet  →  MAE = 18.79 µm  ·  R² = 0.82', 6.0, 4.95, 4.0, 0.5,
          size=15, color=WHITE, bold=True)
 add_text(s, 'Winning branch', 6.0, 5.45, 4.0, 0.3, size=11,
          color=hexc(0xCB, 0xD5, 0xE1), bold=True)
-add_text(s, 'A_ST_feature_noise (no tuning, augmented data)',
-         6.0, 5.7, 4.0, 0.4, size=14, color=WHITE)
+add_text(s, 'SOLO_A_N_CT_random (axial-only, tuned, no augmentation)',
+         6.0, 5.7, 4.0, 0.4, size=13, color=WHITE)
 
 
 # =============================================================================
@@ -206,8 +206,9 @@ add_text(s, 'A_ST_feature_noise (no tuning, augmented data)',
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
 slide_title(s, 'The pipeline at a glance',
-            sub='From raw data D, two parallel data branches (Normal / Augmented), '
-                'three tuning options, single LOEO-CV evaluator, ranking, then SHAP.')
+            sub='From raw data D, three feature subsets (FUSION / SOLO_A / SOLO_R) × '
+                'two data branches (Normal / Augmented) × three tuning options = '
+                '36 branches under one LOEO-CV evaluator, ranking, then SHAP.')
 fit_image(s, FIG / 'layered_pipeline' / '00_layered_flow_diagram_no_holdout.png',
           0.5, 1.55, SW - 1.0, SH - 2.0)
 
@@ -290,13 +291,13 @@ section_divider(
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'Baseline performance (N_ST)',
+slide_title(s, 'Baseline performance (FUSION_N_ST)',
             sub='ElasticNet emerges as the strongest baseline. Tree-based '
                 'and kernel models underperform with only 8 training rows.')
 
 # Left: big stat callout
 add_rect(s, 0.5, 1.7, 5.2, 4.8, OFFWHITE)
-add_text(s, 'BASELINE  (N_ST)', 0.7, 1.85, 5.0, 0.4, size=14,
+add_text(s, 'BASELINE  (FUSION_N_ST)', 0.7, 1.85, 5.0, 0.4, size=14,
          color=STEEL, bold=True)
 add_text(s, 'MAE  26.96 µm', 0.7, 2.3, 5.0, 0.9, size=42,
          color=NAVY, bold=True)
@@ -306,8 +307,8 @@ add_text(s, 'R²  0.602', 0.7, 3.75, 5.0, 0.55, size=20, color=INK)
 add_text(s, 'MAPE  17.0 %', 0.7, 4.3, 5.0, 0.55, size=20, color=INK)
 add_text(s, 'winning model: ElasticNet', 0.7, 5.0, 5.0, 0.4,
          size=13, color=MUTED, italic=True)
-add_text(s, 'config: normal data, no tuning, no augmentation',
-         0.7, 5.35, 5.0, 0.4, size=13, color=MUTED, italic=True)
+add_text(s, 'config: fusion (203 feats: A+R+agg), no tuning, no augmentation',
+         0.7, 5.35, 5.0, 0.4, size=12, color=MUTED, italic=True)
 add_text(s, 'training rows: 8  ·  test rows: 1 per fold  ·  10 folds',
          0.7, 5.7, 5.0, 0.4, size=13, color=MUTED, italic=True)
 
@@ -396,12 +397,78 @@ add_text(s, 'RMSE', 6.7, SH - 0.4, 6.3, 0.3, size=11, color=MUTED,
 
 
 # =============================================================================
+# NEW — SECTION DIVIDER: Feature Subset Branching (FUSION/SOLO_A/SOLO_R)
+# =============================================================================
+section_divider(
+    5, 'Feature-Subset Branching',
+    'Splitting the tree at the very top by signal type: '
+    'FUSION (all 203 features), SOLO_A (axial only, ~101), '
+    'SOLO_R (rotational only, ~99). Motivation: EDA showed '
+    'mean |corr(A, R)| ≈ 0.70 — A and R encode largely the same wear signal.')
+
+
+# =============================================================================
+# NEW — EDA redundancy (justification for SOLO branches)
+# =============================================================================
+s = prs.slides.add_slide(blank)
+add_full_bg(s, WHITE)
+slide_title(s, 'Why split into SOLO_A and SOLO_R?',
+            sub='Axial (A) and rotational (R) features share most of the '
+                'wear signal — redundancy is high enough that the model can '
+                'learn from either one alone.')
+
+fit_image(s, FIG / 'eda_fusion' / 'redundancy_heatmap.png',
+          0.4, 1.55, 6.3, 5.4)
+fit_image(s, FIG / 'eda_fusion' / 'top_features_per_direction.png',
+          6.7, 1.55, 6.3, 5.4)
+add_text(s, 'A vs R redundancy heatmap', 0.4, SH - 0.4, 6.3, 0.3,
+         size=11, color=MUTED, italic=True, align=PP_ALIGN.CENTER)
+add_text(s, 'Top correlated features per direction',
+         6.7, SH - 0.4, 6.3, 0.3, size=11, color=MUTED, italic=True,
+         align=PP_ALIGN.CENTER)
+
+
+# =============================================================================
+# NEW — Signal branch experiment outcome (3 best models)
+# =============================================================================
+s = prs.slides.add_slide(blank)
+add_full_bg(s, WHITE)
+slide_title(s, 'SOLO_A beats FUSION by ~30 % MAE',
+            sub='Isolated baseline comparison (no tuning, no augmentation) '
+                'across all baseline regressors. SOLO_A wins consistently — '
+                'removing the redundant R features cleans the signal.')
+
+fit_image(s, FIG / 'signal_branch' / 'best_model_per_branch.png',
+          0.4, 1.55, 8.3, 5.4)
+
+# Right: stat callout per branch
+add_rect(s, 9.0, 1.7, 4.0, 5.0, OFFWHITE)
+add_text(s, 'PER-BRANCH BEST', 9.2, 1.85, 3.6, 0.4, size=12,
+         color=STEEL, bold=True)
+add_text(s, 'FUSION', 9.2, 2.3, 3.6, 0.35, size=14, color=NAVY, bold=True)
+add_text(s, 'MAE 30.2 µm  ·  203 feats', 9.2, 2.65, 3.6, 0.35,
+         size=12, color=INK)
+add_text(s, 'SOLO_A', 9.2, 3.2, 3.6, 0.35, size=14,
+         color=hexc(0xA0, 0x52, 0x1E), bold=True)
+add_text(s, 'MAE 21.6 µm  ·  101 feats', 9.2, 3.55, 3.6, 0.35,
+         size=12, color=INK)
+add_text(s, 'SOLO_R', 9.2, 4.1, 3.6, 0.35, size=14,
+         color=hexc(0x1B, 0x7F, 0x5A), bold=True)
+add_text(s, 'MAE 30.9 µm  ·  99 feats', 9.2, 4.45, 3.6, 0.35,
+         size=12, color=INK)
+add_text(s, 'Verdict', 9.2, 5.1, 3.6, 0.35, size=12, color=MUTED,
+         italic=True, bold=True)
+add_text(s, 'Drop R features.\nWear lives in axial.',
+         9.2, 5.45, 3.6, 0.9, size=13, color=INK, bold=True)
+
+
+# =============================================================================
 # SLIDE 13 — SECTION DIVIDER: Branch comparison
 # =============================================================================
 section_divider(
-    5, 'Branch-Level Comparison',
-    'All twelve branches side by side: per-branch best, deltas against '
-    'baseline, and full model × branch heatmaps.')
+    6, 'Branch-Level Comparison',
+    'All thirty-six branches side by side (3 feature subsets × 12 stages): '
+    'per-branch best, deltas against baseline, and full branch × model heatmaps.')
 
 
 # =============================================================================
@@ -409,14 +476,14 @@ section_divider(
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'Δ versus baseline N_ST',
-            sub='Negative = improves. Most branches sit within a "practical tie" '
-                'band (|Δ MAE| < 1 µm). The only branch with a clear MAE bump '
-                'is A_CT_*_feature_noise (Lasso falls apart).')
+slide_title(s, 'Δ versus baseline FUSION_N_ST',
+            sub='Negative = improves. SOLO_A branches dominate the green band '
+                '(-5 to -8 µm MAE). FUSION_A_CT_*_feature_noise spikes (Lasso '
+                'collapses); SOLO_R branches widen the error.')
 
-fit_image(s, FIG / 'layered_pipeline' / '09_delta_MAE_vs_baseline_N_ST.png',
+fit_image(s, FIG / 'layered_pipeline' / '09_delta_MAE_vs_baseline_FUSION_N_ST.png',
           0.4, 1.55, 6.3, 5.4)
-fit_image(s, FIG / 'layered_pipeline' / '09_delta_RMSE_vs_baseline_N_ST.png',
+fit_image(s, FIG / 'layered_pipeline' / '09_delta_RMSE_vs_baseline_FUSION_N_ST.png',
           6.7, 1.55, 6.3, 5.4)
 add_text(s, 'Δ MAE', 0.4, SH - 0.4, 6.3, 0.3, size=11, color=MUTED,
          italic=True, align=PP_ALIGN.CENTER)
@@ -429,9 +496,10 @@ add_text(s, 'Δ RMSE', 6.7, SH - 0.4, 6.3, 0.3, size=11, color=MUTED,
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'Model × branch heatmap — MAE',
-            sub='Linear models (Ridge, Lasso, ElasticNet) dominate. Nonlinear '
-                'models suffer the small-sample curse.')
+slide_title(s, 'Branch × model heatmap — MAE',
+            sub='Linear-regularized models (Ridge, Lasso, ElasticNet) dominate. '
+                'SOLO_A rows score lowest; SOLO_R rows score worst. '
+                'Tree ensembles and MLP suffer the small-sample curse.')
 
 fit_image(s, FIG / 'layered_pipeline' / '09_heatmap_model_vs_branch_MAE.png',
           0.5, 1.55, SW - 1.0, 5.4)
@@ -442,9 +510,9 @@ fit_image(s, FIG / 'layered_pipeline' / '09_heatmap_model_vs_branch_MAE.png',
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'Model × branch heatmap — R²',
-            sub='Same shape: linear-regularized methods explain the most '
-                'variance; tree ensembles often go negative.')
+slide_title(s, 'Branch × model heatmap — R²',
+            sub='Same shape as MAE. SOLO_A_N_CT_random with ElasticNet '
+                'reaches R² ≈ 0.82; tree ensembles and MLP often go negative.')
 
 fit_image(s, FIG / 'layered_pipeline' / '09_heatmap_model_vs_branch_R2.png',
           0.5, 1.55, SW - 1.0, 5.4)
@@ -456,8 +524,9 @@ fit_image(s, FIG / 'layered_pipeline' / '09_heatmap_model_vs_branch_R2.png',
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
 slide_title(s, 'Best model per branch',
-            sub='ElasticNet wins ten out of twelve branches; the remaining two '
-                '(A_CT_*_feature_noise) collapse onto Lasso.')
+            sub='ElasticNet wins the vast majority of the 36 branches. '
+                'SOLO_A_N_CT_random / _grid sit at the top (MAE 18.79 µm); '
+                'a few FUSION_A_CT_*_feature_noise branches collapse onto Lasso.')
 
 fit_image(s, FIG / 'layered_pipeline' / '09_best_model_per_branch_MAE.png',
           0.5, 1.55, SW - 1.0, 5.4)
@@ -469,8 +538,9 @@ fit_image(s, FIG / 'layered_pipeline' / '09_best_model_per_branch_MAE.png',
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
 slide_title(s, 'Branch performance — MAE & RMSE',
-            sub='Lower is better. The 12 branches cluster in a tight band, with '
-                'A_ST_feature_noise marginally on top by MAE.')
+            sub='Lower is better. The 36 branches separate into three groups '
+                'by feature subset: SOLO_A (best, blue band), FUSION (middle), '
+                'SOLO_R (worst). SOLO_A_N_CT_random tops at 18.79 µm.')
 
 fit_image(s, FIG / 'layered_pipeline' / '09_branch_performance_MAE.png',
           0.4, 1.55, 6.3, 5.4)
@@ -488,8 +558,9 @@ add_text(s, 'RMSE', 6.7, SH - 0.4, 6.3, 0.3, size=11, color=MUTED,
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
 slide_title(s, 'Branch performance — R² & MAPE',
-            sub='R² ranking partly disagrees with MAE: A_CT_feature_scaling '
-                'branches score the highest R² (better calibrated residuals).')
+            sub='R² and MAPE confirm the MAE ranking. SOLO_A_N_CT_* reaches '
+                'R² ≈ 0.82, MAPE ≈ 14 %. SOLO_R consistently collapses to '
+                'R² near zero or negative.')
 
 fit_image(s, FIG / 'layered_pipeline' / '09_branch_performance_R2.png',
           0.4, 1.55, 6.3, 5.4)
@@ -666,13 +737,14 @@ section_divider(
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'SHAP — ElasticNet on baseline (N_ST)',
+slide_title(s, 'SHAP — ElasticNet on BEST GLOBAL (SOLO_A_N_CT_random)',
             sub='Mean |SHAP| feature ranking (bar) and signed per-experiment '
-                'contributions (beeswarm) for the baseline configuration.')
+                'contributions (beeswarm) for the winning configuration '
+                '(MAE = 18.79 µm).')
 
-fit_image(s, FIG / 'shap' / '10_shap_bar_elasticnet_n_st.png',
+fit_image(s, FIG / 'shap' / '10_shap_bar_elasticnet_solo_a_n_ct_random.png',
           0.4, 1.55, 6.3, 5.4)
-fit_image(s, FIG / 'shap' / '10_shap_summary_elasticnet_n_st.png',
+fit_image(s, FIG / 'shap' / '10_shap_summary_elasticnet_solo_a_n_ct_random.png',
           6.7, 1.55, 6.3, 5.4)
 add_text(s, 'Mean |SHAP| importance', 0.4, SH - 0.4, 6.3, 0.3,
          size=11, color=MUTED, italic=True, align=PP_ALIGN.CENTER)
@@ -686,14 +758,14 @@ add_text(s, 'Beeswarm — signed contributions per experiment',
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'SHAP — ElasticNet on best branch (A_ST_feature_noise)',
-            sub='Same model family, slightly different training noise. The top '
-                'features are largely the same — confidence that the ranking '
-                'is not an artefact of one specific augmentation.')
+slide_title(s, 'SHAP — ElasticNet on twin branch (SOLO_A_N_CT_grid)',
+            sub='Same model family, identical hyperparameters reached via Grid '
+                'search instead of Random. Top features are virtually identical '
+                'to the Random twin — ranking is robust to the search strategy.')
 
-fit_image(s, FIG / 'shap' / '10_shap_bar_elasticnet_a_st_feature_noise.png',
+fit_image(s, FIG / 'shap' / '10_shap_bar_elasticnet_solo_a_n_ct_grid.png',
           0.4, 1.55, 6.3, 5.4)
-fit_image(s, FIG / 'shap' / '10_shap_summary_elasticnet_a_st_feature_noise.png',
+fit_image(s, FIG / 'shap' / '10_shap_summary_elasticnet_solo_a_n_ct_grid.png',
           6.7, 1.55, 6.3, 5.4)
 add_text(s, 'Mean |SHAP| importance', 0.4, SH - 0.4, 6.3, 0.3,
          size=11, color=MUTED, italic=True, align=PP_ALIGN.CENTER)
@@ -707,14 +779,15 @@ add_text(s, 'Beeswarm — signed contributions per experiment',
 # =============================================================================
 s = prs.slides.add_slide(blank)
 add_full_bg(s, WHITE)
-slide_title(s, 'SHAP — XGBoost on N_CT_random (best nonlinear)',
-            sub='A nonlinear sanity check. XGBoost surfaces partially '
-                'different features and interactions, but the dominant '
-                'signal overlaps with the linear models.')
+slide_title(s, 'SHAP — XGBoost on SOLO_R_A_CT_random_feature_noise (best nonlinear)',
+            sub='A nonlinear sanity check, on the rotational-only branch. '
+                'XGBoost surfaces partially different features and interactions, '
+                'but the dominant signal overlaps with the linear models — '
+                'wear cues are similar across model families.')
 
-fit_image(s, FIG / 'shap' / '10_shap_bar_xgboost_n_ct_random.png',
+fit_image(s, FIG / 'shap' / '10_shap_bar_xgboost_solo_r_a_ct_random_feature_noise.png',
           0.4, 1.55, 6.3, 5.4)
-fit_image(s, FIG / 'shap' / '10_shap_summary_xgboost_n_ct_random.png',
+fit_image(s, FIG / 'shap' / '10_shap_summary_xgboost_solo_r_a_ct_random_feature_noise.png',
           6.7, 1.55, 6.3, 5.4)
 add_text(s, 'Mean |SHAP| importance', 0.4, SH - 0.4, 6.3, 0.3,
          size=11, color=MUTED, italic=True, align=PP_ALIGN.CENTER)
@@ -736,18 +809,19 @@ add_text(s, 'What this study actually shows', 0.8, 0.9, SW - 1.6, 0.8,
          size=34, color=WHITE, bold=True)
 
 items = [
-    ('1.  Linear-regularized models win',
-     'ElasticNet dominates ten of twelve branches. Tree ensembles and '
+    ('1.  SOLO_A wins — drop the rotational signal',
+     'Axial-only features cut baseline MAE by ~30 % (26.96 → 18.79 µm). A '
+     'and R features encode the same wear signal (|corr| ≈ 0.70); fusing '
+     'them just adds noise.'),
+    ('2.  Linear-regularized models dominate',
+     'ElasticNet wins almost all of the 36 branches. Tree ensembles and '
      'kernels are starved by n=8 training rows.'),
-    ('2.  Tuning barely moves the needle',
-     'Random and Grid converge on the same hyper-parameters. Both deliver '
-     'sub-1 µm MAE gains over the un-tuned baseline.'),
-    ('3.  Augmentation is roughly neutral',
-     'feature_noise nudges MAE by ≈0.04 µm; feature_scaling improves RMSE '
-     'by ≈0.8 µm. No strategy reshapes the ranking.'),
-    ('4.  Twelve branches → one ElasticNet',
-     'The branching study is most useful as evidence that the choice is '
-     'robust: roughly the same model wins everywhere.'),
+    ('3.  Tuning helps inside SOLO_A',
+     'Random and Grid converge on identical hyper-parameters and deliver '
+     '~2.8 µm MAE gain over SOLO_A_N_ST. On FUSION the effect is noisier.'),
+    ('4.  Augmentation is roughly neutral',
+     'feature_noise can hurt under heavy tuning (Lasso collapse). '
+     'feature_scaling slightly improves RMSE. No strategy reshapes the ranking.'),
     ('5.  SHAP is the conclusion, not the engine',
      'It runs last, on real rows only, to describe — not decide — which '
      'features drive the predictions.'),

@@ -81,28 +81,16 @@ outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_R2.png,figur
 outputs/figures/layered_pipeline/09_sequential_comparison_dashboard_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,dashboard 2x2 con la historia completa,run_layered_pipeline.py
 outputs/figures/layered_pipeline/09_tuning_effect_MAE.png,figure,09,ranking_y_resumenes,,,,,loeo,ST vs Random vs Grid lado a lado,run_layered_pipeline.py
 outputs/figures/layered_pipeline/09_tuning_effect_RMSE.png,figure,09,ranking_y_resumenes,,,,,loeo,ST vs Random vs Grid lado a lado,run_layered_pipeline.py
-outputs/metrics/shap/10_shap_feature_ranking_elasticnet_a_st_feature_noise.csv,csv,10,shap,,,,,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
-outputs/metrics/shap/10_shap_feature_ranking_elasticnet_n_st.csv,csv,10,shap,,,,,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
 outputs/metrics/shap/10_shap_feature_ranking_elasticnet_solo_a_n_ct_grid.csv,csv,10,shap,SOLO_A_N_CT_grid,N,grid,none,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
 outputs/metrics/shap/10_shap_feature_ranking_elasticnet_solo_a_n_ct_random.csv,csv,10,shap,SOLO_A_N_CT_random,N,random,none,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
-outputs/metrics/shap/10_shap_feature_ranking_xgboost_n_ct_random.csv,csv,10,shap,,,,,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
 outputs/metrics/shap/10_shap_feature_ranking_xgboost_solo_r_a_ct_random_feature_noise.csv,csv,10,shap,SOLO_R_A_CT_random_feature_noise,A,random,feature_noise,loeo,ranking de features por |SHAP| medio,run_layered_pipeline.py
 outputs/metrics/shap/10_shap_selected_models.csv,csv,10,shap,,,,,loeo,modelos elegidos para SHAP y razon,run_layered_pipeline.py
-outputs/metrics/shap/10_shap_values_elasticnet_a_st_feature_noise.csv,csv,10,shap,,,,,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
-outputs/metrics/shap/10_shap_values_elasticnet_n_st.csv,csv,10,shap,,,,,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
 outputs/metrics/shap/10_shap_values_elasticnet_solo_a_n_ct_grid.csv,csv,10,shap,SOLO_A_N_CT_grid,N,grid,none,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
 outputs/metrics/shap/10_shap_values_elasticnet_solo_a_n_ct_random.csv,csv,10,shap,SOLO_A_N_CT_random,N,random,none,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
-outputs/metrics/shap/10_shap_values_xgboost_n_ct_random.csv,csv,10,shap,,,,,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
 outputs/metrics/shap/10_shap_values_xgboost_solo_r_a_ct_random_feature_noise.csv,csv,10,shap,SOLO_R_A_CT_random_feature_noise,A,random,feature_noise,loeo,"valores SHAP individuales por (experimento, feature)",run_layered_pipeline.py
-outputs/figures/shap/10_shap_bar_elasticnet_a_st_feature_noise.png,figure,10,shap,,,,,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
-outputs/figures/shap/10_shap_bar_elasticnet_n_st.png,figure,10,shap,,,,,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
 outputs/figures/shap/10_shap_bar_elasticnet_solo_a_n_ct_grid.png,figure,10,shap,SOLO_A_N_CT_grid,N,grid,none,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
 outputs/figures/shap/10_shap_bar_elasticnet_solo_a_n_ct_random.png,figure,10,shap,SOLO_A_N_CT_random,N,random,none,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
-outputs/figures/shap/10_shap_bar_xgboost_n_ct_random.png,figure,10,shap,,,,,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
 outputs/figures/shap/10_shap_bar_xgboost_solo_r_a_ct_random_feature_noise.png,figure,10,shap,SOLO_R_A_CT_random_feature_noise,A,random,feature_noise,loeo,|SHAP| medio del modelo seleccionado,run_layered_pipeline.py
-outputs/figures/shap/10_shap_summary_elasticnet_a_st_feature_noise.png,figure,10,shap,,,,,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
-outputs/figures/shap/10_shap_summary_elasticnet_n_st.png,figure,10,shap,,,,,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
 outputs/figures/shap/10_shap_summary_elasticnet_solo_a_n_ct_grid.png,figure,10,shap,SOLO_A_N_CT_grid,N,grid,none,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
 outputs/figures/shap/10_shap_summary_elasticnet_solo_a_n_ct_random.png,figure,10,shap,SOLO_A_N_CT_random,N,random,none,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
-outputs/figures/shap/10_shap_summary_xgboost_n_ct_random.png,figure,10,shap,,,,,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
 outputs/figures/shap/10_shap_summary_xgboost_solo_r_a_ct_random_feature_noise.png,figure,10,shap,SOLO_R_A_CT_random_feature_noise,A,random,feature_noise,loeo,beeswarm SHAP (impacto + valor) del modelo,run_layered_pipeline.py
