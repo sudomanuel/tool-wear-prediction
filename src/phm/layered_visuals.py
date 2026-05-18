@@ -85,31 +85,29 @@ def plot_layered_flow_diagram(target_dir: Path,
                               best_mae: float = None,
                               filename: str = '00_layered_flow_diagram_no_holdout') -> Path:
     """
-    Diagrama jerarquico del flujo (estilo profesional, sin solapamientos):
-        D → {N, A} → {ST, CT_random, CT_grid} → LOEO-CV → ranking → SHAP
+    Diagrama jerarquico del flujo — 4 niveles con trifurcacion inicial:
+        D → {FUSION, SOLO_A, SOLO_R} → {N, A} → {ST, CT_r, CT_g} → LOEO → RANK → SHAP
 
     Layout:
-      - Patron "busbar": las 6 ramas convergen a una linea horizontal,
-        y un unico arrow sale del busbar hacia LOEO (en lugar de 6 flechas
-        cruzandose en el centro de la caja).
-      - Anclajes en bordes top/bottom de cada caja (no en el centro).
-      - Fondo sombreado agrupando las regiones N (verde) y A (naranja).
+      - Nivel 0: Dataset
+      - Nivel 1: trifurcacion por subconjunto de features (FUSION / SOLO_A / SOLO_R)
+      - Nivel 2: estado de aumentacion (N real / A aug) por cada subset — 6 nodos
+      - Anotacion: x3 configs de tuning = 36 ramas totales
+      - Nivel 3+: LOEO-CV → Ranking → SHAP
     """
-    from matplotlib.patches import Rectangle
-
-    fig, ax = plt.subplots(figsize=(16, 10))
+    fig, ax = plt.subplots(figsize=(18, 14))
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis('off')
 
-    # Paleta refinada (fc=fill, ec=edge, tc=text)
     COLOR = {
-        'dataset':  {'fc': '#FFF3CC', 'ec': '#A67C00', 'tc': '#5C4400'},
-        'data_N':   {'fc': '#D1ECDF', 'ec': '#1B7F5A', 'tc': '#0F4A36'},
-        'data_A':   {'fc': '#FADCDC', 'ec': '#B0324A', 'tc': '#6B1F2D'},
-        'branch_N': {'fc': '#E6F1E0', 'ec': '#5C8A4B', 'tc': '#2B4A23'},
-        'branch_A': {'fc': '#FBE9DE', 'ec': '#B0664A', 'tc': '#5C2E1F'},
-        'cv':       {'fc': '#DCEAF7', 'ec': '#1F4E79', 'tc': '#102C44'},
-        'final':    {'fc': '#E8E0F2', 'ec': '#5C3F8E', 'tc': '#2D1F47'},
-        'shap':     {'fc': '#FFE6BD', 'ec': '#A86A00', 'tc': '#5C3A00'},
+        'dataset': {'fc': '#FFF3CC', 'ec': '#A67C00', 'tc': '#5C4400'},
+        'fusion':  {'fc': '#EDE0F5', 'ec': '#5C3F8E', 'tc': '#2D1F47'},
+        'solo_a':  {'fc': '#FADCDC', 'ec': '#B0324A', 'tc': '#6B1F2D'},
+        'solo_r':  {'fc': '#D4EDE5', 'ec': '#1B7F5A', 'tc': '#0F4A36'},
+        'data_N':  {'fc': '#D1ECDF', 'ec': '#1B7F5A', 'tc': '#0F4A36'},
+        'data_A':  {'fc': '#FBE5E5', 'ec': '#B0324A', 'tc': '#6B1F2D'},
+        'cv':      {'fc': '#DCEAF7', 'ec': '#1F4E79', 'tc': '#102C44'},
+        'final':   {'fc': '#E8E0F2', 'ec': '#5C3F8E', 'tc': '#2D1F47'},
+        'shap':    {'fc': '#FFE6BD', 'ec': '#A86A00', 'tc': '#5C3A00'},
     }
     EDGE_GRAY = '#7A7A7A'
 
@@ -138,98 +136,100 @@ def plot_layered_flow_diagram(target_dir: Path,
                 color=color, linewidth=lw,
                 solid_capstyle='round', zorder=1)
 
-    # --- Fondo sombreado: regiones N (verde claro) y A (naranja claro) ---
-    ax.add_patch(Rectangle((1.5, 63.5), 47, 8.5, facecolor='#F2F9F4',
-                           edgecolor='none', zorder=0))
-    ax.add_patch(Rectangle((51.5, 63.5), 47, 8.5, facecolor='#FDF3EF',
-                           edgecolor='none', zorder=0))
-
     # --- Nivel 0: Dataset ---
-    D = _box(50, 93, 44, 5.5,
+    D = _box(50, 93, 56, 5.5,
              'D — Dataset  (experiment_features.csv,  n = 10)',
              COLOR['dataset'], fontsize=11.5, weight='bold')
 
-    # --- Nivel 1: split N / A ---
-    N = _box(25, 81, 32, 7,
-             'N — Real data\n(no augmentation)',
-             COLOR['data_N'], fontsize=10.5, weight='bold')
-    A = _box(75, 81, 32, 7,
-             'A — Augmented (train only)\n× 3 strategies: noise · scaling · grouped',
-             COLOR['data_A'], fontsize=10, weight='bold')
+    # --- Nivel 1: trifurcacion por feature subset ---
+    F  = _box(20, 82, 27, 7.5,
+              'FUSION\n203 feat  (A + R + agg)',
+              COLOR['fusion'], fontsize=9.5, weight='bold')
+    SA = _box(50, 82, 27, 7.5,
+              'SOLO_A\n~101 feat  (axial)',
+              COLOR['solo_a'], fontsize=9.5, weight='bold')
+    SR = _box(80, 82, 27, 7.5,
+              'SOLO_R\n~99 feat  (rotac.)',
+              COLOR['solo_r'], fontsize=9.5, weight='bold')
 
-    _arrow(D['bottom'], N['top'], color=COLOR['data_N']['ec'], lw=1.7)
-    _arrow(D['bottom'], A['top'], color=COLOR['data_A']['ec'], lw=1.7)
+    # D → 3 subsets via mini-busbar
+    d_bus_y = 89.25
+    _line(D['bottom'], (D['cx'], d_bus_y), color='#A67C00', lw=1.5)
+    _line((F['cx'], d_bus_y), (SR['cx'], d_bus_y), color='#A67C00', lw=1.5)
+    _arrow((F['cx'],  d_bus_y), F['top'],  color=COLOR['fusion']['ec'], lw=1.7)
+    _arrow((SA['cx'], d_bus_y), SA['top'], color=COLOR['solo_a']['ec'], lw=1.7)
+    _arrow((SR['cx'], d_bus_y), SR['top'], color=COLOR['solo_r']['ec'], lw=1.7)
 
-    # --- Nivel 2: 6 ramas (3 por lado, bien separadas) ---
-    by = 68
-    bw, bh = 14, 4.5
-    n_xs = (8.5, 25.0, 41.5)
-    a_xs = (58.5, 75.0, 91.5)
+    # --- Nivel 2: N/A per subset (6 nodos) ---
+    bw2, bh2 = 12.5, 5.5
+    # FUSION subset
+    fN  = _box(10,  69, bw2, bh2, 'F · N\n(real)', COLOR['data_N'], fontsize=8.5, weight='bold')
+    fA  = _box(29,  69, bw2, bh2, 'F · A\n(aug)',  COLOR['data_A'], fontsize=8.5, weight='bold')
+    # SOLO_A subset
+    saN = _box(43,  69, 11,  bh2, 'SA · N\n(real)',COLOR['data_N'], fontsize=8.5, weight='bold')
+    saA = _box(57,  69, 11,  bh2, 'SA · A\n(aug)', COLOR['data_A'], fontsize=8.5, weight='bold')
+    # SOLO_R subset
+    srN = _box(71,  69, bw2, bh2, 'SR · N\n(real)',COLOR['data_N'], fontsize=8.5, weight='bold')
+    srA = _box(90,  69, 11.5,bh2, 'SR · A\n(aug)', COLOR['data_A'], fontsize=8.5, weight='bold')
 
-    N_ST = _box(n_xs[0], by, bw, bh, 'N · ST',        COLOR['branch_N'], fontsize=9.5, weight='bold')
-    N_CR = _box(n_xs[1], by, bw, bh, 'N · CT_random', COLOR['branch_N'], fontsize=9.5, weight='bold')
-    N_CG = _box(n_xs[2], by, bw, bh, 'N · CT_grid',   COLOR['branch_N'], fontsize=9.5, weight='bold')
-    A_ST = _box(a_xs[0], by, bw, bh, 'A · ST',        COLOR['branch_A'], fontsize=9.5, weight='bold')
-    A_CR = _box(a_xs[1], by, bw, bh, 'A · CT_random', COLOR['branch_A'], fontsize=9.5, weight='bold')
-    A_CG = _box(a_xs[2], by, bw, bh, 'A · CT_grid',   COLOR['branch_A'], fontsize=9.5, weight='bold')
+    def _subset_busbar(parent, left_child, right_child, color, bus_y):
+        _line(parent['bottom'], (parent['cx'], bus_y), color=color, lw=1.5)
+        _line((left_child['cx'], bus_y), (right_child['cx'], bus_y), color=color, lw=1.5)
+        _arrow((left_child['cx'],  bus_y), left_child['top'],  color=color, lw=1.3)
+        _arrow((right_child['cx'], bus_y), right_child['top'], color=color, lw=1.3)
 
-    # N → 3 ramas (mini-busbar ortogonal: drop + horizontal + 3 arrows)
-    n_bus_y = 75.3
-    _line(N['bottom'], (N['cx'], n_bus_y), color=COLOR['data_N']['ec'], lw=1.5)
-    _line((n_xs[0], n_bus_y), (n_xs[2], n_bus_y),
-          color=COLOR['data_N']['ec'], lw=1.5)
-    for child in (N_ST, N_CR, N_CG):
-        _arrow((child['cx'], n_bus_y), child['top'],
-               color=COLOR['data_N']['ec'], lw=1.3)
+    _subset_busbar(F,  fN,  fA,  COLOR['fusion']['ec'],  75.5)
+    _subset_busbar(SA, saN, saA, COLOR['solo_a']['ec'],   75.5)
+    _subset_busbar(SR, srN, srA, COLOR['solo_r']['ec'],   75.5)
 
-    # A → 3 ramas
-    a_bus_y = 75.3
-    _line(A['bottom'], (A['cx'], a_bus_y), color=COLOR['data_A']['ec'], lw=1.5)
-    _line((a_xs[0], a_bus_y), (a_xs[2], a_bus_y),
-          color=COLOR['data_A']['ec'], lw=1.5)
-    for child in (A_ST, A_CR, A_CG):
-        _arrow((child['cx'], a_bus_y), child['top'],
-               color=COLOR['data_A']['ec'], lw=1.3)
+    # --- Anotacion lateral: x3 tuning = 36 ramas ---
+    # Lines from all 6 N/A boxes → main busbar at y=62
+    main_bus_y = 62.0
+    all_na = (fN, fA, saN, saA, srN, srA)
+    for node in all_na:
+        _line(node['bottom'], (node['cx'], main_bus_y), color=EDGE_GRAY, lw=1.0)
+    _line((fN['cx'], main_bus_y), (srA['cx'], main_bus_y), color=EDGE_GRAY, lw=1.8)
 
-    # --- Nivel 3: busbar de las 6 ramas → LOEO ---
-    busbar_y = 56
-    for child in (N_ST, N_CR, N_CG, A_ST, A_CR, A_CG):
-        _line(child['bottom'], (child['cx'], busbar_y),
-              color=EDGE_GRAY, lw=1.0)
-    _line((n_xs[0], busbar_y), (a_xs[2], busbar_y),
-          color=EDGE_GRAY, lw=1.6)
+    ax.annotate(
+        '× 3 configs de tuning por par:\n  ST   ·   CT_random   ·   CT_grid\n⟹   36 ramas en total',
+        xy=(52, 59.5), xytext=(69, 56.5),
+        ha='left', va='center', fontsize=9, color='#444444', style='italic',
+        arrowprops=dict(arrowstyle='->', color='#999999', lw=0.9),
+        bbox=dict(boxstyle='round,pad=0.4', fc='#FFFFF0', ec='#BBBBBB', lw=0.9),
+        zorder=5
+    )
 
-    LOEO = _box(50, 47, 54, 5.5,
+    # --- LOEO-CV ---
+    LOEO = _box(50, 52, 60, 5.5,
                 'LOEO-CV   ·   10 folds   ·   n_test = 1   ·   honesto',
                 COLOR['cv'], fontsize=11.5, weight='bold')
-    _arrow((50, busbar_y), LOEO['top'],
-           color=COLOR['cv']['ec'], lw=2.0)
+    _arrow((50, main_bus_y), LOEO['top'], color=COLOR['cv']['ec'], lw=2.0)
 
-    # --- Nivel 4: Ranking ---
-    RANK = _box(50, 32, 54, 5,
+    # --- Ranking ---
+    RANK = _box(50, 39, 60, 5.5,
                 'Ranking final   ·   MAE LOEO menor = mejor',
                 COLOR['final'], fontsize=11.5, weight='bold')
-    _arrow(LOEO['bottom'], RANK['top'],
-           color=COLOR['final']['ec'], lw=1.7)
+    _arrow(LOEO['bottom'], RANK['top'], color=COLOR['final']['ec'], lw=1.7)
 
-    # --- Nivel 5: SHAP ---
-    SHAP = _box(50, 17, 54, 5,
+    # --- SHAP ---
+    SHAP = _box(50, 26, 60, 5.5,
                 'SHAP   ·   interpretabilidad sobre datos REALES',
                 COLOR['shap'], fontsize=11.5, weight='bold')
-    _arrow(RANK['bottom'], SHAP['top'],
-           color=COLOR['shap']['ec'], lw=1.7)
+    _arrow(RANK['bottom'], SHAP['top'], color=COLOR['shap']['ec'], lw=1.7)
 
-    # --- Footer: mejor modelo (si disponible) ---
+    # --- Footer: mejor modelo ---
     if best_model_name is not None and best_mae is not None and np.isfinite(best_mae):
-        ax.text(50, 6.5,
+        ax.text(50, 13.5,
                 f'Mejor LOEO:   {best_model_name}    ·    MAE = {best_mae:.2f} µm',
                 ha='center', va='center', fontsize=12, color='#1F4E79',
                 weight='bold',
                 bbox=dict(boxstyle='round,pad=0.6', fc='#E8F1F8',
                           ec='#1F4E79', linewidth=1.4))
 
-    ax.set_title('Pipeline experimental por capas — LOEO-CV (sin hold-out)',
-                 fontsize=14.5, pad=14, weight='bold', color='#1F2937')
+    ax.set_title(
+        'Pipeline experimental por capas — LOEO-CV (sin hold-out)\n'
+        '3 subsets × 2 estados de aug × 3 configs de tuning = 36 ramas',
+        fontsize=13, pad=12, weight='bold', color='#1F2937')
 
     fig.tight_layout()
     return _save(fig, target_dir, filename)
